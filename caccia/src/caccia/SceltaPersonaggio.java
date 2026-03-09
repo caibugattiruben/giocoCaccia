@@ -7,12 +7,15 @@ package caccia;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -23,7 +26,6 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SceltaPersonaggio.class.getName());
 
-    JPanel g1, g2, g3, g4;
 
     public SceltaPersonaggio() {
         initComponents();
@@ -32,7 +34,8 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
         for (int i = 0; i < 4; i++) {
             JButton b = new JButton();
-            b.setIcon(new ImageIcon("immagini/g"+(i+1)+".png"));
+            ImageIcon immagine=new ImageIcon("immagini/g"+(i+1)+".png");
+            b.setIcon(immagine);
 
             b.setBorderPainted(false);
             b.setContentAreaFilled(false);
@@ -47,7 +50,18 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
                 b.setBorderPainted(true);
                 b.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 4));
             });
+            
+            b.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e) {
+                    int w = b.getWidth();
+                    int h = b.getHeight();
 
+                    Image scaled = immagine.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+                    b.setIcon(new ImageIcon(scaled));
+                }
+            });    
+            
             cacciatori[i] = b;
         }
 
@@ -59,21 +73,48 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
                 g.drawImage(imgSfondo, 0, 0, getWidth(), getHeight(), this);
             }
         };
-
-        panel.setLayout(new GridLayout(3, 4, 15, 15));
-        for (int i = 0; i < 4; i++) {
-            panel.add(new JLabel());
-        }
         
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        //panel in alto
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 0.25;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel panelUpp=new JPanel();
+        panelUpp.setOpaque(false);
+        panel.add(panelUpp,gbc);
+        
+        //panel con bottoni
+        JPanel panelPiccolo=new JPanel();
+        panelPiccolo.setLayout(new GridLayout(1, 4, 20, 20));
+        panelPiccolo.setOpaque(true);
         for (JButton b : cacciatori) {
-            panel.add(b);
+            panelPiccolo.add(b);
         }
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 0.60;
+        panel.add(panelPiccolo,gbc);
         
-        for (int i = 0; i < 4; i++) {
-            panel.add(new JLabel());
-        }
+        //panel in fondo
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 0.15;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel panelDown=new JPanel();
+        panelDown.setLayout(new GridLayout(1, 1, 20, 20));
+        panelDown.add(new JButton("ciao"));
+        panelDown.setOpaque(false);
+        panel.add(panelDown,gbc);
+        
         this.setLayout(new BorderLayout());
         this.add(panel);
+        
     }
 
 
@@ -92,11 +133,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addGap(0, 872, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         pack();
@@ -126,6 +167,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new SceltaPersonaggio().setVisible(true));
     }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
