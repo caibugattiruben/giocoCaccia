@@ -6,16 +6,20 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import static java.awt.Color.green;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -33,9 +37,22 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         JButton[] cacciatori = new JButton[4];
 
         for (int i = 0; i < 4; i++) {
-            JButton b = new JButton();
-            ImageIcon immagine=new ImageIcon("immagini/g"+(i+1)+".png");
-            b.setIcon(immagine);
+            Image immagine=new ImageIcon("immagini/g"+(i+1)+".png").getImage();
+            JButton b = new JButton(){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();//non devo farlo per forza ma logicamente è piu bello (tolgo il pennello che ho usato per dipingere)
+                }
+            };
+            
+            
 
             b.setBorderPainted(false);
             b.setContentAreaFilled(false);
@@ -49,18 +66,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
                 }
                 b.setBorderPainted(true);
                 b.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 4));
-            });
-            
-            b.addComponentListener(new ComponentAdapter() {
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    int w = b.getWidth();
-                    int h = b.getHeight();
-
-                    Image scaled = immagine.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-                    b.setIcon(new ImageIcon(scaled));
-                }
-            });    
+            });  
             
             cacciatori[i] = b;
         }
@@ -83,34 +89,39 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         gbc.weightx = 1;
         gbc.weighty = 0.25;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        JPanel panelUpp=new JPanel();
+        JPanel panelUpp = new JPanel();
         panelUpp.setOpaque(false);
-        panel.add(panelUpp,gbc);
-        
+        panel.add(panelUpp, gbc);
+
         //panel con bottoni
-        JPanel panelPiccolo=new JPanel();
+        JPanel panelPiccolo = new JPanel();
         panelPiccolo.setLayout(new GridLayout(1, 4, 20, 20));
-        panelPiccolo.setOpaque(true);
+        panelPiccolo.setOpaque(false);
         for (JButton b : cacciatori) {
             panelPiccolo.add(b);
         }
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1;
-        gbc.weighty = 0.60;
-        panel.add(panelPiccolo,gbc);
-        
+        gbc.weighty = 0.6;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;   
+        panel.add(panelPiccolo, gbc);
+
         //panel in fondo
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 1;
         gbc.weighty = 0.15;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        JPanel panelDown=new JPanel();
-        panelDown.setLayout(new GridLayout(1, 1, 20, 20));
-        panelDown.add(new JButton("ciao"));
+        JPanel panelDown = new JPanel();
+        panelDown.setLayout(new GridLayout(1, 3, 20, 20));
         panelDown.setOpaque(false);
-        panel.add(panelDown,gbc);
+        panelDown.add(new JLabel(""));
+        panelDown.add(new JButton("Scegli cacciatore"));
+        panelDown.add(new JLabel(""));
+        panel.add(panelDown, gbc);
+        
         
         this.setLayout(new BorderLayout());
         this.add(panel);
