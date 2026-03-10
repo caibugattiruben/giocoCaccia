@@ -41,7 +41,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
         
         JPanel panel = new JPanel() {
-            Image immagineSfondoGioco=new ImageIcon("immagini/sfondoIniziale.png").getImage();
+            Image immagineSfondoGioco=new ImageIcon("immagini/sfondo.jpeg").getImage();
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -51,37 +51,31 @@ public class AvvioGioco extends javax.swing.JFrame {
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        //titolo
+        //panel vuoto
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1;
-        gbc.weighty = 0.4;
-        JPanel panelTitolo=new JPanel();
-        panelTitolo.setLayout(new GridLayout(1,1,20,20));
-        JLabel titolo=new JLabel(){
-            @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
-
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-                    g2d.drawImage(immagineNomeGioco, 0, 0, getWidth(), getHeight(), this);
-
-                    g2d.dispose();
-                }
-        };
-        titolo.setFont(new Font("Stencil", Font.BOLD, 24)); 
-        panelTitolo.add(titolo);
-        panel.add(panelTitolo,gbc);
+        gbc.weighty = 0.4 ;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JPanel vuoto1=new JPanel();
+        vuoto1.setOpaque(false);
+        panel.add(vuoto1,gbc);
         
-        
-        //tasti
+        //vuotoSinistra
         gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.2;
+        gbc.weighty = 0.6;
+        JPanel vuoto2=new JPanel();
+        vuoto2.setOpaque(false);
+        panel.add(vuoto2,gbc);
+        
+        //bottoniCentro
+        gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.weightx = 0.4;
         gbc.weighty = 0.6;
-        
         JPanel tasti=new JPanel();
         tasti.setLayout(new GridLayout(3,1,20,20));
         JButton newGame=new JButton("newGame");
@@ -101,34 +95,26 @@ public class AvvioGioco extends javax.swing.JFrame {
         panel.add(tasti,gbc);
         
         
-        //centro
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0.4;
-        gbc.weighty = 0.6;
-        
-        JPanel vuoto1=new JPanel();
-        panel.add(vuoto1,gbc);
-        
-        
-        //destraVuoto
-        gbc.gridx = 0;
+        //destra
+        gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.weightx = 0.2;
+        gbc.weighty = 0.6;
+        
+        JPanel vuoto3=new JPanel();
+        panel.add(vuoto3,gbc);
+        
+        
+        //destrapiccolo
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.weightx = 0.1;
         gbc.weighty = 0.3;
         
-        JPanel vuoto2=new JPanel();
-        panel.add(vuoto2,gbc);
-        
-        
-        //impostazioni
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0.2;
-        gbc.weighty = 0.6;
-        
-        JPanel impostazioniPanel=new JPanel();
-        impostazioniPanel.setLayout(new GridLayout(1,1,20,20));
+        JPanel vuoto4=new JPanel();
+        vuoto4.setLayout(new GridLayout(2,1,20,20));
+        JPanel imp=new JPanel();
+        imp.setLayout(new GridLayout(1,1,20,20));
         JButton impostazioni=new JButton(){
             @Override
                 protected void paintComponent(Graphics g) {
@@ -142,8 +128,12 @@ public class AvvioGioco extends javax.swing.JFrame {
                     g2d.dispose();
                 }
         };
-        impostazioniPanel.add(impostazioni);
-        panel.add(impostazioniPanel,gbc);
+        imp.add(impostazioni);
+        vuoto4.add(new JPanel());
+        vuoto4.add(imp);
+        panel.add(vuoto4,gbc);
+
+        
         
         
         this.setLayout(new BorderLayout());
