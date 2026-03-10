@@ -6,7 +6,6 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import static java.awt.Color.green;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -14,8 +13,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,35 +35,8 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
         for (int i = 0; i < 4; i++) {
             Image immagine=new ImageIcon("immagini/g"+(i+1)+".png").getImage();
-            JButton b = new JButton(){
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
-
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
-
-                    g2d.dispose();//non devo farlo per forza ma logicamente è piu bello (tolgo il pennello che ho usato per dipingere)
-                }
-            };
             
-            
-
-            b.setBorderPainted(false);
-            b.setContentAreaFilled(false);
-            b.setFocusPainted(false);
-            b.setOpaque(false);
-
-            b.addActionListener(e -> {
-
-                for (JButton btn : cacciatori) {
-                    btn.setBorder(null);
-                }
-                b.setBorderPainted(true);
-                b.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 4));
-            });  
+            JButton b=creoBottone(immagine,cacciatori);
             
             cacciatori[i] = b;
         }
@@ -128,7 +98,38 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         
     }
 
+    public JButton creoBottone(Image immagine,JButton[] cacciatori){
+        JButton b = new JButton(){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
 
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();//non devo farlo per forza ma logicamente è piu bello (tolgo il pennello che ho usato per dipingere)
+                }
+            };
+        
+        b.setBorderPainted(false);
+        b.setContentAreaFilled(false);
+        b.setFocusPainted(false);
+        b.setOpaque(false);
+        
+        aggiungiListener(b,cacciatori);
+        return b;
+    }
+    public void aggiungiListener(JButton b,JButton[] cacciatori){
+        b.addActionListener(e -> {
+                for (JButton btn : cacciatori) {
+                    btn.setBorder(null);
+                }
+                b.setBorderPainted(true);
+                b.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 4));
+            });  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

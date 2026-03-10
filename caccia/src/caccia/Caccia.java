@@ -14,8 +14,8 @@ public class Caccia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SceltaPersonaggio p1=new SceltaPersonaggio();
-        p1.setVisible(true);
+        gestoreForm g=new gestoreForm();
+        g.avvio();
     }
     
 }
