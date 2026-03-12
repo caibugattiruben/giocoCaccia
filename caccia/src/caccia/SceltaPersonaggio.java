@@ -26,11 +26,14 @@ import javax.swing.JPanel;
 public class SceltaPersonaggio extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SceltaPersonaggio.class.getName());
+    
+    gestoreForm gest;
 
-
-    public SceltaPersonaggio() {
+    public SceltaPersonaggio(gestoreForm g) {
         initComponents();
-
+        
+        this.gest=g;
+        
         JButton[] cacciatori = new JButton[4];
 
         for (int i = 0; i < 4; i++) {
@@ -177,7 +180,6 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SceltaPersonaggio().setVisible(true));
     }
    
 

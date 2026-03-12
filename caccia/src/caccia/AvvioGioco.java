@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -37,11 +36,10 @@ public class AvvioGioco extends javax.swing.JFrame {
         
         this.g=g;
         
-        Image immagineNomeGioco=new ImageIcon("immagini/sfondoNome.png").getImage();
         Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
         
         JPanel panel = new JPanel() {
-            Image immagineSfondoGioco=new ImageIcon("immagini/sfondo.jpeg").getImage();
+            Image immagineSfondoGioco=new ImageIcon("immagini/sfondo.png").getImage();
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -55,27 +53,27 @@ public class AvvioGioco extends javax.swing.JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1;
-        gbc.weighty = 0.4 ;
+        gbc.weighty = 0.5 ;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.CENTER;
         JPanel vuoto1=new JPanel();
         vuoto1.setOpaque(false);
         panel.add(vuoto1,gbc);
-        
-        //vuotoSinistra
-        gbc.gridx = 0;
+                
+        //panel vuotoBassoSx
+        gbc.gridx = -1;
         gbc.gridy = 1;
-        gbc.weightx = 0.2;
-        gbc.weighty = 0.6;
-        JPanel vuoto2=new JPanel();
-        vuoto2.setOpaque(false);
-        panel.add(vuoto2,gbc);
+        gbc.weightx = 0.7;
+        gbc.weighty = 0.5 ;
+        JPanel vuotoSx=new JPanel();
+        vuotoSx.setOpaque(false);
+        panel.add(vuotoSx,gbc);
         
         //bottoniCentro
-        gbc.gridx = 1;
+        gbc.gridx =  0;
         gbc.gridy = 1;
-        gbc.weightx = 0.4;
-        gbc.weighty = 0.6;
+        gbc.weightx = -0.7;
+        gbc.weighty = 0.5;
         JPanel tasti=new JPanel();
         tasti.setLayout(new GridLayout(3,1,20,20));
         JButton newGame=new JButton("newGame");
@@ -89,6 +87,7 @@ public class AvvioGioco extends javax.swing.JFrame {
             }
         });
         
+        tasti.setOpaque(false);
         tasti.add(newGame);
         tasti.add(loadGame);
         tasti.add(exit);
@@ -98,8 +97,8 @@ public class AvvioGioco extends javax.swing.JFrame {
         //destra
         gbc.gridx = 2;
         gbc.gridy = 1;
-        gbc.weightx = 0.2;
-        gbc.weighty = 0.6;
+        gbc.weightx = 0.6;
+        gbc.weighty = 0.5;
         
         JPanel vuoto3=new JPanel();
         panel.add(vuoto3,gbc);
@@ -114,6 +113,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         JPanel vuoto4=new JPanel();
         vuoto4.setLayout(new GridLayout(2,1,20,20));
         JPanel imp=new JPanel();
+        imp.setOpaque(false);
         imp.setLayout(new GridLayout(1,1,20,20));
         JButton impostazioni=new JButton(){
             @Override
