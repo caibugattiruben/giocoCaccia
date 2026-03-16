@@ -28,11 +28,15 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SceltaPersonaggio.class.getName());
     
     gestoreForm gest;
+    SceltaPersonaggio gioco;
 
-    public SceltaPersonaggio(gestoreForm g) {
+    public SceltaPersonaggio(gestoreForm g,int w,int h) {
         initComponents();
         
+        this.setSize(w,h);
+        
         this.gest=g;
+        gioco=this;
         
         JButton[] cacciatori = new JButton[4];
 
@@ -66,6 +70,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         panelUpp.setOpaque(false);
         panel.add(panelUpp, gbc);
 
+        
         //panel con bottoni
         JPanel panelPiccolo = new JPanel();
         panelPiccolo.setLayout(new GridLayout(1, 4, 20, 20));
@@ -91,7 +96,9 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         panelDown.setLayout(new GridLayout(1, 3, 20, 20));
         panelDown.setOpaque(false);
         panelDown.add(new JLabel(""));
-        panelDown.add(new JButton("Scegli cacciatore"));
+        JButton scegli = new JButton("Scegli cacciatore");
+        scegli.addActionListener(e -> g.aproMercante(gioco.getWidth(), gioco.getHeight()));
+        panelDown.add(scegli);
         panelDown.add(new JLabel(""));
         panel.add(panelDown, gbc);
         

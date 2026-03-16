@@ -5,7 +5,6 @@
 package caccia;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -17,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 public class AvvioGioco extends javax.swing.JFrame {
     
     gestoreForm g;
+    AvvioGioco gioco;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AvvioGioco.class.getName());
 
     /**
@@ -35,6 +36,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         initComponents();
         
         this.g=g;
+        gioco=this;
         
         Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
         
@@ -76,14 +78,22 @@ public class AvvioGioco extends javax.swing.JFrame {
         gbc.weighty = 0.5;
         JPanel tasti=new JPanel();
         tasti.setLayout(new GridLayout(3,1,20,20));
-        JButton newGame=new JButton("newGame");
-        JButton loadGame=new JButton("loadGame");
-        JButton exit=new JButton("exit");
+        JButton newGame=new JButton("New Game");
+        JButton loadGame=new JButton("Load Game");
+        JButton exit=new JButton("Exit");
         
         newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                g.newGameScelto();
+                int w = gioco.getWidth();
+                int h = gioco.getHeight();
+                g.newGameScelto(w,h);
+            }
+        });
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
         
@@ -114,7 +124,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         vuoto4.setLayout(new GridLayout(2,1,20,20));
         JPanel imp=new JPanel();
         imp.setOpaque(false);
-        imp.setLayout(new GridLayout(1,1,20,20));
+        imp.setLayout(new GridLayout(3,3,20,20));
         JButton impostazioni=new JButton(){
             @Override
                 protected void paintComponent(Graphics g) {
@@ -128,18 +138,30 @@ public class AvvioGioco extends javax.swing.JFrame {
                     g2d.dispose();
                 }
         };
-        imp.add(impostazioni);
+        impostazioni.setBorderPainted(false);
+        impostazioni.setContentAreaFilled(false);
+        impostazioni.setFocusPainted(false);
+        impostazioni.setOpaque(false);
+        
+        for(int i=0;i<9;i++){
+            if(i==8){
+                imp.add(impostazioni);
+            }
+            else{
+                imp.add(new JLabel(""));
+            }
+        }
+        
         vuoto4.add(new JPanel());
         vuoto4.add(imp);
         panel.add(vuoto4,gbc);
 
         
         
-        
+        setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.add(panel);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

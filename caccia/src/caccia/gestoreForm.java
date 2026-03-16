@@ -10,15 +10,20 @@ package caccia;
  */
 public class gestoreForm {
     AvvioGioco formAvvio=new AvvioGioco(this);
-    SceltaPersonaggio formPersonaggio=new SceltaPersonaggio(this);
-    Mercante formMercante=new Mercante(this);
+    SceltaPersonaggio formPersonaggio;
+    Mercante formMercante;
     
     public void avvio(){
-        formMercante.setVisible(true);
+        formAvvio.setVisible(true);
     }
     
-    public void newGameScelto(){
+    public void newGameScelto(int w,int h){
         formAvvio.setVisible(false);
-        formPersonaggio.setVisible(true);
+        (formPersonaggio=new SceltaPersonaggio(this,w,h)).setVisible(true);
+    }
+    
+    public void aproMercante(int w,int h){
+        formPersonaggio.setVisible(false);
+        (formMercante=new Mercante(this,w,h)).setVisible(true);
     }
 }

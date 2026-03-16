@@ -21,8 +21,10 @@ public class Mercante extends javax.swing.JFrame {
     /**
      * Creates new form Mercante
      */
-    public Mercante(gestoreForm g) {
+    public Mercante(gestoreForm g,int w,int h) {
         initComponents();
+
+        this.setSize(w, h);
         this.g=g;
         
         JPanel panel = new JPanel() {
