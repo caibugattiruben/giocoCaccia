@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         };
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
         
         //panel vuoto
         gbc.gridx = 0;
@@ -57,30 +59,74 @@ public class AvvioGioco extends javax.swing.JFrame {
         gbc.weightx = 1;
         gbc.weighty = 0.5 ;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.CENTER;
         JPanel vuoto1=new JPanel();
         vuoto1.setOpaque(false);
         panel.add(vuoto1,gbc);
                 
-        //panel vuotoBassoSx
-        gbc.gridx = -1;
-        gbc.gridy = 1;
-        gbc.weightx = 0.7;
-        gbc.weighty = 0.5 ;
-        JPanel vuotoSx=new JPanel();
-        vuotoSx.setOpaque(false);
-        panel.add(vuotoSx,gbc);
+        
         
         //bottoniCentro
         gbc.gridx =  0;
         gbc.gridy = 1;
         gbc.weightx = -0.7;
         gbc.weighty = 0.5;
+        gbc.insets=new Insets(50,150,100,150);
         JPanel tasti=new JPanel();
         tasti.setLayout(new GridLayout(3,1,20,20));
-        JButton newGame=new JButton("New Game");
-        JButton loadGame=new JButton("Load Game");
-        JButton exit=new JButton("Exit");
+        JButton newGame=new JButton(){
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    
+                    Image img=new ImageIcon("immagini/newGame.png").getImage();
+                    g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
+        newGame.setBorderPainted(false);
+        newGame.setContentAreaFilled(false);
+        newGame.setFocusPainted(false);
+        newGame.setOpaque(false);
+        JButton loadGame=new JButton(){
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    Image img=new ImageIcon("immagini/loadGame.png").getImage();
+                    g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
+        loadGame.setBorderPainted(false);
+        loadGame.setContentAreaFilled(false);
+        loadGame.setFocusPainted(false);
+        loadGame.setOpaque(false);
+        JButton exit=new JButton(){
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    Image img=new ImageIcon("immagini/exit.png").getImage();
+                    g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+                    
+                    g2d.dispose();
+                }
+        };
+        exit.setBorderPainted(false);
+        exit.setContentAreaFilled(false);
+        exit.setFocusPainted(false);
+        exit.setOpaque(false);
         
         newGame.addActionListener(new ActionListener() {
             @Override
@@ -103,6 +149,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         tasti.add(exit);
         panel.add(tasti,gbc);
         
+        gbc.insets=new Insets(0,0,0,0);
         
         //destra
         gbc.gridx = 2;
@@ -111,6 +158,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         gbc.weighty = 0.5;
         
         JPanel vuoto3=new JPanel();
+        vuoto3.setOpaque(false);
         panel.add(vuoto3,gbc);
         
         
@@ -121,6 +169,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         gbc.weighty = 0.3;
         
         JPanel vuoto4=new JPanel();
+        vuoto4.setOpaque(false);
         vuoto4.setLayout(new GridLayout(2,1,20,20));
         JPanel imp=new JPanel();
         imp.setOpaque(false);
@@ -151,8 +200,9 @@ public class AvvioGioco extends javax.swing.JFrame {
                 imp.add(new JLabel(""));
             }
         }
-        
-        vuoto4.add(new JPanel());
+        JPanel ciao=new JPanel();
+        ciao.setOpaque(false);
+        vuoto4.add(ciao);
         vuoto4.add(imp);
         panel.add(vuoto4,gbc);
 
@@ -161,6 +211,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.add(panel);
+        this.setBounds(0, 0, 800, 650);
     }
     /**
      * This method is called from within the constructor to initialize the form.
