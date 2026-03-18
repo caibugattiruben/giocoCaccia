@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +30,8 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     
     gestoreForm gest;
     SceltaPersonaggio gioco;
+    int numCacciatore;
+    JButton scegli ;
 
     public SceltaPersonaggio(gestoreForm g,int w,int h) {
         initComponents();
@@ -38,14 +41,14 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         this.gest=g;
         gioco=this;
         
-        JButton[] cacciatori = new JButton[4];
+        ArrayList<JButton> cacciatori = new ArrayList();
 
         for (int i = 0; i < 4; i++) {
             Image immagine=new ImageIcon("immagini/g"+(i+1)+".png").getImage();
             
             JButton b=creoBottone(immagine,cacciatori);
             
-            cacciatori[i] = b;
+            cacciatori.add(b);
         }
 
         JPanel panel = new JPanel() {
@@ -96,7 +99,12 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         panelDown.setLayout(new GridLayout(1, 3, 20, 20));
         panelDown.setOpaque(false);
         panelDown.add(new JLabel(""));
-        JButton scegli = new JButton("Scegli cacciatore");
+        scegli= new JButton("Scegli cacciatore");
+        scegli.setEnabled(false);
+        scegli.addActionListener(e -> {
+                gest.setNumero(numCacciatore);
+                gest.sceltaPersonaggioCliccata();
+        });  
         scegli.addActionListener(e -> g.aproMercante(gioco.getWidth(), gioco.getHeight()));
         panelDown.add(scegli);
         panelDown.add(new JLabel(""));
@@ -108,7 +116,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         
     }
 
-    public JButton creoBottone(Image immagine,JButton[] cacciatori){
+    public JButton creoBottone(Image immagine,ArrayList<JButton> cacciatori){
         JButton b = new JButton(){
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -123,6 +131,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
                 }
             };
         
+        b.addActionListener(e -> {
+                numCacciatore=cacciatori.indexOf(b);
+                scegli.setEnabled(true);
+        }); 
+        
         b.setBorderPainted(false);
         b.setContentAreaFilled(false);
         b.setFocusPainted(false);
@@ -131,14 +144,14 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         aggiungiListener(b,cacciatori);
         return b;
     }
-    public void aggiungiListener(JButton b,JButton[] cacciatori){
+    public void aggiungiListener(JButton b,ArrayList<JButton> cacciatori){
         b.addActionListener(e -> {
                 for (JButton btn : cacciatori) {
                     btn.setBorder(null);
                 }
                 b.setBorderPainted(true);
-                b.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 4));
-            });  
+                b.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4));
+        });  
     }
     /**
      * This method is called from within the constructor to initialize the form.

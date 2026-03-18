@@ -14,7 +14,7 @@ public class Caccia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        gestoreForm g=new gestoreForm();
+        GestoreCaccia g=new GestoreCaccia();
         g.avvio();
     }
     

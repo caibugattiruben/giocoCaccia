@@ -211,7 +211,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.add(panel);
-        this.setBounds(0, 0, 800, 650);
+        this.setBounds(0, 0, 830, 650);
     }
     /**
      * This method is called from within the constructor to initialize the form.

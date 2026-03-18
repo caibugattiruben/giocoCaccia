@@ -9,10 +9,16 @@ package caccia;
  * @author caibugatti.ruben
  */
 public class gestoreForm {
+    GestoreCaccia gestore;
     AvvioGioco formAvvio=new AvvioGioco(this);
     SceltaPersonaggio formPersonaggio;
     Mercante formMercante;
     
+    private int nCacciatore;
+    
+    public gestoreForm(GestoreCaccia g){
+        this.gestore=g;
+    }
     public void avvio(){
         formAvvio.setVisible(true);
     }
@@ -25,5 +31,26 @@ public class gestoreForm {
     public void aproMercante(int w,int h){
         formPersonaggio.setVisible(false);
         (formMercante=new Mercante(this,w,h)).setVisible(true);
+    }
+    
+    public void sceltaPersonaggioCliccata(){
+        gestore.sceltaPersonaggio();
+    }
+    public Cacciatore sceltaPersonaggio(){
+        switch (nCacciatore){
+                case 1:
+                    return new CacciatoreVeloce();
+                case 2:
+                    return new CacciatoreMedico();
+                case 3:
+                    return new CacciatoreForte();
+                case 4:
+                    return new CacciatoreProtetto();
+        }
+        return new CacciatoreVeloce();
+    }
+    
+    public void setNumero(int n){
+        this.nCacciatore=n;
     }
 }
