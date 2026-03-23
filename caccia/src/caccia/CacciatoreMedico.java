@@ -10,8 +10,7 @@ package caccia;
  */
 public class CacciatoreMedico extends Cacciatore {
     
-    @Override
-    public String toString(){
-        return "2";
+    public CacciatoreMedico(int v,int d,int vel,int s){
+        super(v,d,vel,s);
     }
 }

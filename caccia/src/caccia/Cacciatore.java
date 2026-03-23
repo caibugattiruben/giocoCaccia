@@ -10,4 +10,12 @@ package caccia;
  */
 public class Cacciatore {
     
+    private int vita,danno,velocità,scudo;
+    
+    public Cacciatore(int v,int d,int vel,int s){
+        this.vita=v;
+        this.danno=d;
+        this.velocità=vel;
+        this.scudo=s;
+    }
 }

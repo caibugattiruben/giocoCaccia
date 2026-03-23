@@ -16,11 +16,8 @@ public class GestoreCaccia {
         gForm.avvio();
     }
     
-    
     public void sceltaPersonaggio(){
         cacciatore=gForm.sceltaPersonaggio();
-        System.out.println(cacciatore);
-        
     }
     
     

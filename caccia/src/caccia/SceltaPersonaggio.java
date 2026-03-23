@@ -105,7 +105,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
                 gest.setNumero(numCacciatore);
                 gest.sceltaPersonaggioCliccata();
         });  
-        scegli.addActionListener(e -> g.aproMercante(gioco.getWidth(), gioco.getHeight()));
+        scegli.addActionListener(e -> g.aproGioco(gioco.getWidth(), gioco.getHeight(),numCacciatore+1));
         panelDown.add(scegli);
         panelDown.add(new JLabel(""));
         panel.add(panelDown, gbc);

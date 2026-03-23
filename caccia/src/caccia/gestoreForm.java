@@ -13,6 +13,7 @@ public class gestoreForm {
     AvvioGioco formAvvio=new AvvioGioco(this);
     SceltaPersonaggio formPersonaggio;
     Mercante formMercante;
+    FormGioco formGioco;
     
     private int nCacciatore;
     
@@ -29,8 +30,13 @@ public class gestoreForm {
     }
     
     public void aproMercante(int w,int h){
-        formPersonaggio.setVisible(false);
+        //manca chiusura gioco
         (formMercante=new Mercante(this,w,h)).setVisible(true);
+    }
+    
+    public void aproGioco(int w,int h,int nCac){
+        formPersonaggio.setVisible(false);
+        (formGioco=new FormGioco(this,w,h,nCac)).setVisible(true);
     }
     
     public void sceltaPersonaggioCliccata(){
@@ -39,15 +45,15 @@ public class gestoreForm {
     public Cacciatore sceltaPersonaggio(){
         switch (nCacciatore){
                 case 1:
-                    return new CacciatoreVeloce();
+                    return new CacciatoreVeloce(100,10,20,10);
                 case 2:
-                    return new CacciatoreMedico();
+                    return new CacciatoreMedico(100,10,20,10);
                 case 3:
-                    return new CacciatoreForte();
+                    return new CacciatoreForte(100,10,20,10);
                 case 4:
-                    return new CacciatoreProtetto();
+                    return new CacciatoreProtetto(100,10,20,10);
         }
-        return new CacciatoreVeloce();
+        return new CacciatoreVeloce(100,10,20,10);
     }
     
     public void setNumero(int n){
