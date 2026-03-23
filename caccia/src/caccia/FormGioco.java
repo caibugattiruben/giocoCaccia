@@ -5,11 +5,11 @@
 package caccia;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -46,26 +46,120 @@ public class FormGioco extends javax.swing.JFrame {
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
+        JPanel panelDX=new JPanel();
+        JPanel panelCX=new JPanel();
+        JPanel panelSX=new JPanel();
         
-        JPanel immagineCacciatore=new JPanel(){
-            Image immagineCacciatore=new ImageIcon("immagini/g"+nC+"Face.png").getImage();
+        //SX
+        panelSX.setLayout(new GridBagLayout());
+        GridBagConstraints gbcSinistra = new GridBagConstraints();
+        
+        gbcSinistra.gridx = 0;
+        gbcSinistra.fill = GridBagConstraints.BOTH;
+        gbcSinistra.insets = new Insets(5,5,5,5);
+
+        // --- IMMAGINE CACCIATORE ---
+        JPanel immagineCacciatore = new JPanel() {
+            Image immagine = new ImageIcon("immagini/g"+nC+"Face.png").getImage();
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(immagineCacciatore, 0, 0, getWidth(), getHeight(), this);
+                g.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        immagineCacciatore.setOpaque(false);
+        gbcSinistra.gridy = 0;
+        gbcSinistra.gridheight = 1;
+        gbcSinistra.weightx = 1.0;
+        gbcSinistra.weighty = 0.3;
+        gbcSinistra.fill = GridBagConstraints.BOTH;
+        panelSX.add(immagineCacciatore, gbcSinistra);
+
+        // --- STATS ---
+        JPanel panelStats = new JPanel();
+        panelStats.setOpaque(false);
+        gbcSinistra.gridy = 1;
+        gbcSinistra.gridheight = 1;
+        gbcSinistra.weighty = 0.1;
+        panelSX.add(panelStats, gbcSinistra);
+
+        // --- SPAZIO VUOTO ---
+        JPanel vuotoSX = new JPanel();
+        vuotoSX.setOpaque(false);
+        gbcSinistra.gridy = 2;
+        gbcSinistra.gridheight = 1;
+        gbcSinistra.weighty = 0.4;
+        panelSX.add(vuotoSX, gbcSinistra);
+
+        // --- INVENTARIO ---
+        JPanel panelInventario = new JPanel() {
+            Image immagineZaino = new ImageIcon("immagini/zaino.png").getImage();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(immagineZaino, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        panelInventario.setOpaque(false);
+        gbcSinistra.gridy = 3;
+        gbcSinistra.gridheight = 1;
+        gbcSinistra.weighty = 0.2;
+        panelSX.add(panelInventario, gbcSinistra);
+
+        // --- AGGIUNGO PANEL SX AL PANEL PRINCIPALE ---
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.weightx = 1;
+        gbc.weightx = 0.15;
+        gbc.weighty = 1.0;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel.add(panelSX, gbc);
+        
+        gbc = new GridBagConstraints();
+        //CX
+        //KM
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.6;
+        gbc.weighty = 0.1; 
+
+        JPanel panelKm=new JPanel();
+        panel.add(panelKm, gbc);
+        
+        //ANIMALE
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weighty = 0.3;
+        JPanel panelAnimale=new JPanel();
+        panel.add(panelAnimale, gbc);
+        
+        //VUOTO
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weighty = 0.3;
+
+        JPanel panelVuoto=new JPanel();
+        panel.add(panelVuoto, gbc);
+        
+        //AVANZA
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.weighty = 0.3;
+
+        JPanel panelAvanza=new JPanel();
+        panel.add(panelAvanza, gbc);
+        
+        gbc = new GridBagConstraints();
+        //DX
+        //ARMA
+        
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.gridheight = 3; 
         gbc.weighty = 1;
 
-        immagineCacciatore.setPreferredSize(new Dimension(200, 200));
-
-        panel.add(immagineCacciatore, gbc);
-       
+        JPanel panelArma=new JPanel();
+        panel.add(panelArma, gbc);
         this.setLayout(new BorderLayout());
         this.add(panel);
         
