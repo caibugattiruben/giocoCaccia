@@ -5,13 +5,16 @@
 package caccia;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -50,7 +53,7 @@ public class FormGioco extends javax.swing.JFrame {
         JPanel panelCX=new JPanel();
         JPanel panelSX=new JPanel();
         
-        //SX
+        //--- SX ---
         panelSX.setLayout(new GridBagLayout());
         GridBagConstraints gbcSinistra = new GridBagConstraints();
         
@@ -77,11 +80,22 @@ public class FormGioco extends javax.swing.JFrame {
 
         // --- STATS ---
         JPanel panelStats = new JPanel();
+        panelStats.setLayout(new GridLayout(2,1,10,10));
         panelStats.setOpaque(false);
         gbcSinistra.gridy = 1;
         gbcSinistra.gridheight = 1;
         gbcSinistra.weighty = 0.1;
+        
+        JProgressBar vita=new JProgressBar();
+        vita.setMinimum(0);
+        vita.setMaximum(100);
+        vita.setString("VITA");
+        vita.setForeground(new Color(206,48,24));
+        vita.setBackground(new Color(170,0,0));
+        panelStats.add(vita);
+        
         panelSX.add(panelStats, gbcSinistra);
+        
 
         // --- SPAZIO VUOTO ---
         JPanel vuotoSX = new JPanel();
@@ -113,53 +127,64 @@ public class FormGioco extends javax.swing.JFrame {
         gbc.weighty = 1.0;
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
+        panelSX.setOpaque(false);
         panel.add(panelSX, gbc);
         
-        gbc = new GridBagConstraints();
-        //CX
+        gbc = new GridBagConstraints();//azzero gbc
+        
+        //--- CX ---
+        panelCX.setLayout(new GridBagLayout());
+        GridBagConstraints gbcCentro = new GridBagConstraints();
+        
         //KM
+        gbcCentro.gridx = 1;
+        gbcCentro.gridy = 0;
+        gbcCentro.weightx = 0.6;
+        gbcCentro.weighty = 0.1; 
+
+        JPanel panelKm=new JPanel();
+        panelCX.add(panelKm, gbcCentro);
+        
+        //ANIMALE
+        gbcCentro.gridx = 1;
+        gbcCentro.gridy = 0;
+        gbcCentro.weighty = 0.3;
+        JPanel panelAnimale=new JPanel();
+        panelAnimale.setBackground(Color.GREEN);
+        panelCX.add(panelAnimale, gbcCentro);
+        
+        //VUOTO
+        gbcCentro.gridx = 1;
+        gbcCentro.gridy = 0;
+        gbcCentro.weighty = 0.3;
+
+        JPanel panelVuoto=new JPanel();
+        panelCX.add(panelVuoto, gbcCentro);
+        
+        //AVANZA
+        gbcCentro.gridx = 1;
+        gbcCentro.gridy = 0;
+        gbcCentro.weighty = 0.3;
+
+        JPanel panelAvanza=new JPanel();
+        panelAvanza.setBackground(Color.GREEN);
+        panelCX.add(panelAvanza, gbcCentro);
+        
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 0.6;
-        gbc.weighty = 0.1; 
-
-        JPanel panelKm=new JPanel();
-        panel.add(panelKm, gbc);
+        gbc.weighty = 1.0;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
         
-        //ANIMALE
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weighty = 0.3;
-        JPanel panelAnimale=new JPanel();
-        panel.add(panelAnimale, gbc);
+        panel.add(panelCX, gbc);
         
-        //VUOTO
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.weighty = 0.3;
-
-        JPanel panelVuoto=new JPanel();
-        panel.add(panelVuoto, gbc);
-        
-        //AVANZA
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.weighty = 0.3;
-
-        JPanel panelAvanza=new JPanel();
-        panel.add(panelAvanza, gbc);
         
         gbc = new GridBagConstraints();
         //DX
         //ARMA
         
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.gridheight = 3; 
-        gbc.weighty = 1;
-
-        JPanel panelArma=new JPanel();
-        panel.add(panelArma, gbc);
+        
         this.setLayout(new BorderLayout());
         this.add(panel);
         
