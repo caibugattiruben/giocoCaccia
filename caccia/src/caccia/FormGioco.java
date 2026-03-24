@@ -6,15 +6,24 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -53,7 +62,7 @@ public class FormGioco extends javax.swing.JFrame {
         JPanel panelCX=new JPanel();
         JPanel panelSX=new JPanel();
         
-        //--- SX ---
+        //------------------------------------ SX ------------------------------------
         panelSX.setLayout(new GridBagLayout());
         GridBagConstraints gbcSinistra = new GridBagConstraints();
         
@@ -80,19 +89,93 @@ public class FormGioco extends javax.swing.JFrame {
 
         // --- STATS ---
         JPanel panelStats = new JPanel();
-        panelStats.setLayout(new GridLayout(2,1,10,10));
+        panelStats.setLayout(new GridLayout(3,1,40,40));
         panelStats.setOpaque(false);
         gbcSinistra.gridy = 1;
         gbcSinistra.gridheight = 1;
         gbcSinistra.weighty = 0.1;
         
-        JProgressBar vita=new JProgressBar();
+        panelStats.add(new JLabel(""));//per farle piu basse e fine
+        
+        //VITA
+        JProgressBar vita=new JProgressBar(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int arc = getHeight();
+                int width = getWidth();
+                int height = getHeight();
+
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, width, height, arc, arc);
+
+                int progress = (int) (width * getPercentComplete());
+                g2.setPaint(new GradientPaint(0, 0, getForeground().brighter(),getWidth(), 0, getForeground().darker()));
+                g2.fillRoundRect(0, 0, progress, height, arc, arc);
+
+                if (isStringPainted()) {
+                    String text = getString();
+                    FontMetrics fm = g2.getFontMetrics();
+
+                    int x = (width - fm.stringWidth(text)) / 2;
+                    int y = (height - fm.getHeight()) / 2 + fm.getAscent();
+
+                    g2.setColor(Color.WHITE);
+                    g2.drawString(text, x, y);
+                }
+                
+                g2.dispose();
+            }
+        };
         vita.setMinimum(0);
         vita.setMaximum(100);
-        vita.setString("VITA");
+        vita.setString("VITA " + vita.getValue() + "%");
         vita.setForeground(new Color(206,48,24));
         vita.setBackground(new Color(170,0,0));
+        vita.setStringPainted(true);
         panelStats.add(vita);
+        
+        //SCUDO
+        JProgressBar scudo=new JProgressBar(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int arc = getHeight();
+                int width = getWidth();
+                int height = getHeight();
+
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, width, height, arc, arc);
+
+                int progress = (int) (width * getPercentComplete());
+                g2.setColor(getForeground());
+                g2.fillRoundRect(0, 0, progress, height, arc, arc);
+
+                if (isStringPainted()) {
+                    String text = getString();
+                    FontMetrics fm = g2.getFontMetrics();
+
+                    int x = (width - fm.stringWidth(text)) / 2;
+                    int y = (height - fm.getHeight()) / 2 + fm.getAscent();
+
+                    g2.setColor(Color.WHITE);
+                    g2.drawString(text, x, y);
+                }
+                
+                g2.dispose();
+            }
+        };
+        scudo.setMinimum(0);
+        scudo.setMaximum(100);
+        scudo.setString("SCUDO " + vita.getValue() + "%");
+        scudo.setForeground(new Color(30,144,255));
+        scudo.setBackground(new Color(65,105,225));
+        scudo.setStringPainted(true);
+        panelStats.add(scudo);
         
         panelSX.add(panelStats, gbcSinistra);
         
@@ -132,59 +215,145 @@ public class FormGioco extends javax.swing.JFrame {
         
         gbc = new GridBagConstraints();//azzero gbc
         
-        //--- CX ---
+        //------------------------------------ CX ------------------------------------
         panelCX.setLayout(new GridBagLayout());
         GridBagConstraints gbcCentro = new GridBagConstraints();
         
-        //KM
         gbcCentro.gridx = 1;
+        gbcCentro.fill = GridBagConstraints.BOTH;
+        gbcCentro.weightx = 1.0;
+
+        //KM
         gbcCentro.gridy = 0;
-        gbcCentro.weightx = 0.6;
-        gbcCentro.weighty = 0.1; 
+        gbcCentro.weighty = 0.2;
 
         JPanel panelKm=new JPanel();
+        panelKm.setOpaque(false);
         panelCX.add(panelKm, gbcCentro);
         
         //ANIMALE
-        gbcCentro.gridx = 1;
-        gbcCentro.gridy = 0;
-        gbcCentro.weighty = 0.3;
+        gbcCentro.gridy = 1;
+        gbcCentro.weighty = 0.4;
         JPanel panelAnimale=new JPanel();
-        panelAnimale.setBackground(Color.GREEN);
+        panelAnimale.setOpaque(false);
         panelCX.add(panelAnimale, gbcCentro);
         
         //VUOTO
-        gbcCentro.gridx = 1;
-        gbcCentro.gridy = 0;
-        gbcCentro.weighty = 0.3;
+        gbcCentro.gridy = 2;
+        gbcCentro.weighty = 0.2;
 
         JPanel panelVuoto=new JPanel();
+        panelVuoto.setOpaque(false);
         panelCX.add(panelVuoto, gbcCentro);
         
         //AVANZA
-        gbcCentro.gridx = 1;
-        gbcCentro.gridy = 0;
-        gbcCentro.weighty = 0.3;
+        gbcCentro.gridy = 3;
+        gbcCentro.weighty = 0.2;
 
         JPanel panelAvanza=new JPanel();
-        panelAvanza.setBackground(Color.GREEN);
+        JButton avanza=new JButton("AVANZA");
+        panelAvanza.setLayout(new GridLayout(3,3,20,20));
+        for(int i=0;i<4;i++){
+            panelAvanza.add(new JLabel(""));
+        }
+        panelAvanza.add(avanza);
+        for(int i=0;i<4;i++){
+            panelAvanza.add(new JLabel(""));
+        }
+        panelAvanza.setOpaque(false);
         panelCX.add(panelAvanza, gbcCentro);
         
+        // --- AGGIUNGO PANEL CX AL PANEL PRINCIPALE ---
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 0.6;
         gbc.weighty = 1.0;
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
+        panelCX.setOpaque(false);
         
         panel.add(panelCX, gbc);
         
         
         gbc = new GridBagConstraints();
-        //DX
+        //------------------------------------ DX ------------------------------------
+        panelDX.setLayout(new GridBagLayout());
+        GridBagConstraints gbcDestra = new GridBagConstraints();
+        
+        gbcDestra.gridx = 2;
+        gbcDestra.fill = GridBagConstraints.BOTH;
+        gbcDestra.weightx = 1.0;
+        
+        //IMPOSTAZIONI
+        gbcDestra.gridy = 0;
+        gbcDestra.weighty = 0.1;
+        
+        JPanel panelImpostazioni=new JPanel();
+        panelImpostazioni.setLayout(new GridLayout(3,3,20,20));
+        for(int i=0;i<2;i++){
+            panelImpostazioni.add(new JLabel(""));
+        }
+        JButton impostazioni=new JButton(){
+            Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagineIngr, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
+        panelImpostazioni.add(impostazioni);
+        for(int i=0;i<6;i++){
+            panelImpostazioni.add(new JLabel(""));
+        }
+        
+        panelDX.add(panelImpostazioni,gbcDestra);
+        
+        //TEXT AREA
+        gbcDestra.gridy = 1;
+        gbcDestra.weighty = 0.3;
+        
+        JPanel panelTextArea=new JPanel();
+        JTextArea textArea=new JTextArea();
+        //mettere che non è modificabile
+        panelTextArea.add(textArea);
+        
+        panelDX.add(panelTextArea,gbcDestra);
+        
+        //VUOTO
+        gbcDestra.gridy = 2;
+        gbcDestra.weighty = 0.1;
+        
+        JPanel vuotoDX=new JPanel();
+        
+        panelDX.add(vuotoDX,gbcDestra);
+        
         //ARMA
+        gbcDestra.gridy = 3;
+        gbcDestra.weighty = 0.5;
         
+        JPanel arma=new JPanel();//aggiungere arma
+        arma.setBackground(Color.GREEN);
         
+        panelDX.add(arma,gbcDestra);
+        
+        // --- AGGIUNGO PANEL DX AL PANEL PRINCIPALE ---
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.weightx = 0.25;
+        gbc.weighty = 1.0;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.BOTH;
+        panelDX.setOpaque(false);
+        
+        panel.add(panelDX, gbc);
+        
+        //AGGIUNGO PANEL CON TUTTO AL FORM
         this.setLayout(new BorderLayout());
         this.add(panel);
         
