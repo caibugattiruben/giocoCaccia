@@ -14,6 +14,7 @@ public class gestoreForm {
     SceltaPersonaggio formPersonaggio;
     Mercante formMercante;
     FormGioco formGioco;
+    FormInventario formInventario;
     
     private int nCacciatore;
     
@@ -35,8 +36,9 @@ public class gestoreForm {
     }
     
     public void aproGioco(int w,int h,int nCac){
-        formPersonaggio.setVisible(false);
-        (formGioco=new FormGioco(this,w,h,nCac)).setVisible(true);
+        formPersonaggio.dispose();
+        formGioco=new FormGioco(this,nCac);
+        apriGioco(w,h);
     }
     
     public void sceltaPersonaggioCliccata(){
@@ -58,5 +60,23 @@ public class gestoreForm {
     
     public void setNumero(int n){
         this.nCacciatore=n;
+    }
+    
+    public void aperturaInventario(int w,int h){
+        formInventario=new FormInventario(this,w,h);
+        formGioco.setVisible(false);
+        formInventario.setVisible(true);
+        
+    }
+    
+    public void chiusuraInventario(int w,int h){
+        formGioco.setVisible(true);
+        formInventario.dispose();
+        
+    }
+    
+    public void apriGioco(int w,int h){
+        formGioco.setSize(w,h);
+        formGioco.setVisible(true);
     }
 }

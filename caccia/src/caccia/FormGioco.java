@@ -16,8 +16,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -37,12 +35,12 @@ public class FormGioco extends javax.swing.JFrame {
      * Creates new form FormGioco
      */
     gestoreForm g;
+    private int w,h;
     private int numCacciatore;
     
-    public FormGioco(gestoreForm gi,int w,int h,int nC) {
+    public FormGioco(gestoreForm gi,int nC) {
         initComponents();
         
-        this.setSize(w, h);
         this.g=gi;
         this.numCacciatore=nC;
         
@@ -189,14 +187,27 @@ public class FormGioco extends javax.swing.JFrame {
         panelSX.add(vuotoSX, gbcSinistra);
 
         // --- INVENTARIO ---
-        JPanel panelInventario = new JPanel() {
+        JPanel panelInventario = new JPanel();
+        JButton zaino=new JButton(){
             Image immagineZaino = new ImageIcon("immagini/zaino.png").getImage();
             @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(immagineZaino, 0, 0, getWidth(), getHeight(), this);
-            }
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagineZaino, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
         };
+        zaino.addActionListener(e -> {
+            aggiornaGrandezze();
+            g.aperturaInventario(w,h);
+        }); 
+        panelInventario.setLayout(new BorderLayout());
+        panelInventario.add(zaino);
         panelInventario.setOpaque(false);
         gbcSinistra.gridy = 3;
         gbcSinistra.gridheight = 1;
@@ -360,6 +371,10 @@ public class FormGioco extends javax.swing.JFrame {
         
     }
     
+    public void aggiornaGrandezze(){
+        this.w=this.getWidth();
+        this.h=this.getHeight();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -384,6 +399,7 @@ public class FormGioco extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     
     /**
      * @param args the command line arguments
