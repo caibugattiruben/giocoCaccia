@@ -102,10 +102,10 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         scegli= new JButton("Scegli cacciatore");
         scegli.setEnabled(false);
         scegli.addActionListener(e -> {
-                gest.setNumero(numCacciatore);
-                gest.sceltaPersonaggioCliccata();
-        });  
-        scegli.addActionListener(e -> g.aproGioco(gioco.getWidth(), gioco.getHeight(),numCacciatore+1));
+            gest.setNumero(numCacciatore);
+            gest.sceltaPersonaggioCliccata();
+            gest.aproGioco(gioco.getWidth(), gioco.getHeight(), numCacciatore+1);
+        });
         panelDown.add(scegli);
         panelDown.add(new JLabel(""));
         panel.add(panelDown, gbc);
@@ -127,7 +127,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
 
                     g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
 
-                    g2d.dispose();//non devo farlo per forza ma logicamente è piu bello (tolgo il pennello che ho usato per dipingere)
+                    g2d.dispose();
                 }
             };
         

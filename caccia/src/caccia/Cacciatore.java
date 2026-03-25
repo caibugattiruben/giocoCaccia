@@ -11,11 +11,31 @@ package caccia;
 public class Cacciatore {
     
     private int vita,danno,velocità,scudo;
+    protected Inventario inventario;
     
-    public Cacciatore(int v,int d,int vel,int s){
-        this.vita=v;
-        this.danno=d;
-        this.velocità=vel;
-        this.scudo=s;
+    public Cacciatore(Inventario inv){
+        this.inventario=inv;
+    }
+    
+    public void formaCacciatore(){
+        vita=100;
+        danno=inventario.getDanno();
+    }
+    
+    public int getVita(){
+        return vita;
+    }
+    public int getScudo(){
+        return scudo;
+    }
+    public int getVelocità(){
+        return velocità;
+    }
+    public int getDanno(){
+        return danno;
+    }
+    
+    public String getCollegamento(Oggetto o){
+        return inventario.getCollegamento(o);
     }
 }

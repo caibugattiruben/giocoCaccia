@@ -6,11 +6,11 @@ package caccia;
 
 /**
  *
- * @author caibugatti.ruben
+ * @author ruben
  */
-public class CacciatoreForte extends Cacciatore {
+public class Vestito extends Oggetto {
     
-    public CacciatoreForte(Inventario inv){
-        super(inv);
+    public Vestito(String n,String c){
+        super(n,c);
     }
 }

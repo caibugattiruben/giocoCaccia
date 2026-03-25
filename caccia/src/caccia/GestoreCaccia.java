@@ -12,13 +12,19 @@ public class GestoreCaccia {
     gestoreForm gForm=new gestoreForm(this);
     Cacciatore cacciatore;
     
-    public void avvio(){
+    public void avvio() {
         gForm.avvio();
     }
-    
-    public void sceltaPersonaggio(){
-        cacciatore=gForm.sceltaPersonaggio();
+
+    public void sceltaPersonaggio() {
+        cacciatore = gForm.sceltaPersonaggio();
+        cacciatore.formaCacciatore();
     }
-    
+
+    public void caricaPersonaggio() {
+        if (cacciatore != null) {
+            gForm.caricaPersonaggio(cacciatore);
+        }
+    }
     
 }

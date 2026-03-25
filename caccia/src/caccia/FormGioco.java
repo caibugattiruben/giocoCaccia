@@ -16,6 +16,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -37,6 +39,8 @@ public class FormGioco extends javax.swing.JFrame {
     gestoreForm g;
     private int w,h;
     private int numCacciatore;
+    JProgressBar scudo,vita;
+    JPanel arma;
     
     public FormGioco(gestoreForm gi,int nC) {
         initComponents();
@@ -96,7 +100,7 @@ public class FormGioco extends javax.swing.JFrame {
         panelStats.add(new JLabel(""));//per farle piu basse e fine
         
         //VITA
-        JProgressBar vita=new JProgressBar(){
+        vita=new JProgressBar(){
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -136,7 +140,7 @@ public class FormGioco extends javax.swing.JFrame {
         panelStats.add(vita);
         
         //SCUDO
-        JProgressBar scudo=new JProgressBar(){
+        scudo=new JProgressBar(){
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -348,8 +352,21 @@ public class FormGioco extends javax.swing.JFrame {
         gbcDestra.gridy = 3;
         gbcDestra.weighty = 0.5;
         
-        JPanel arma=new JPanel();//aggiungere arma
-        arma.setBackground(Color.GREEN);
+        arma = new JPanel(){
+            Image immagine=new ImageIcon("immagini/sfondoArma.jpg").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };;
+        arma.setLayout(new BorderLayout());
         
         panelDX.add(arma,gbcDestra);
         
@@ -364,6 +381,7 @@ public class FormGioco extends javax.swing.JFrame {
         
         panel.add(panelDX, gbc);
         
+        
         //AGGIUNGO PANEL CON TUTTO AL FORM
         this.setLayout(new BorderLayout());
         this.add(panel);
@@ -375,6 +393,52 @@ public class FormGioco extends javax.swing.JFrame {
         this.w=this.getWidth();
         this.h=this.getHeight();
     }
+    
+    public void caricaPersonaggio(Cacciatore c){
+        vita.setValue(c.getVita());
+        vita.setString("VITA " + c.getVita() + "%");
+        vita.repaint();
+
+        scudo.setValue(c.getScudo());
+        scudo.setString("SCUDO " + c.getScudo() + "%");
+        scudo.repaint();
+
+        JPanel arma1 = new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            int w = getWidth();
+            int h = getHeight();
+
+            Image img = new ImageIcon(c.getCollegamento(c.inventario.oggetti.get(0))).getImage();
+
+            int imgW = img.getWidth(null);
+            int imgH = img.getHeight(null);
+
+            double scale = Math.min((double)w / imgW, (double)h / imgH) * 1.2;
+            int drawW = (int)(imgW * scale);
+            int drawH = (int)(imgH * scale);
+
+            int x = (w - drawW) / 2;
+            int y = (h - drawH) / 2;
+
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+            g2d.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
+
+            g2d.drawImage(img, x, y, drawW, drawH, null);
+            g2d.dispose();
+        }
+    };
+
+        arma1.setOpaque(false);
+        arma.add(arma1);
+        arma.revalidate();
+        arma.repaint();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
