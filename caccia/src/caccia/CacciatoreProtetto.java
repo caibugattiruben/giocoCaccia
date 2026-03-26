@@ -10,7 +10,7 @@ package caccia;
  */
 public class CacciatoreProtetto extends Cacciatore {
     
-    public CacciatoreProtetto(Inventario inv){
-        super(inv);
+    public CacciatoreProtetto(Inventario inv,int v,int s){
+        super(inv,v,s);
     }
 }

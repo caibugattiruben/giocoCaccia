@@ -16,8 +16,8 @@ public class GestoreCaccia {
         gForm.avvio();
     }
 
-    public void sceltaPersonaggio() {
-        cacciatore = gForm.sceltaPersonaggio();
+    public void setPersonaggio(Cacciatore c) {
+        cacciatore = c;
         cacciatore.formaCacciatore();
     }
 
@@ -25,6 +25,7 @@ public class GestoreCaccia {
         if (cacciatore != null) {
             gForm.caricaPersonaggio(cacciatore);
         }
+        cacciatore.contenutiInv();
     }
     
 }

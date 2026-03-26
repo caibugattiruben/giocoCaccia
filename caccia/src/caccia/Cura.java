@@ -10,7 +10,15 @@ package caccia;
  */
 public class Cura extends Oggetto {
     
-    public Cura(String n,String c){
+    private int valore;
+    
+    public Cura(String n,String c,int val){
         super(n,c);
+        this.valore=val;
+    }
+    
+    @Override
+    public String toString(){
+        return nome;
     }
 }

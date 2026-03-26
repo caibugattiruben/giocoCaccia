@@ -33,4 +33,10 @@ public class Inventario {
     public String getCollegamento(Oggetto o){
         return o.getCollegamento();
     }
+    
+    public void cosaHo(){
+        for(Oggetto o:oggetti){
+            System.out.println(o);
+        }
+    }
 }

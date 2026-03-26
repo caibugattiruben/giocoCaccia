@@ -13,8 +13,10 @@ public class Cacciatore {
     private int vita,danno,velocità,scudo;
     protected Inventario inventario;
     
-    public Cacciatore(Inventario inv){
+    public Cacciatore(Inventario inv,int v,int s){
         this.inventario=inv;
+        this.velocità=v;
+        this.scudo=s;
     }
     
     public void formaCacciatore(){
@@ -37,5 +39,9 @@ public class Cacciatore {
     
     public String getCollegamento(Oggetto o){
         return inventario.getCollegamento(o);
+    }
+    
+    public void contenutiInv(){
+        inventario.cosaHo();
     }
 }

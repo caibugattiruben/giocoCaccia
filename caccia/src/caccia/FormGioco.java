@@ -16,8 +16,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,7 +36,6 @@ public class FormGioco extends javax.swing.JFrame {
      */
     gestoreForm g;
     private int w,h;
-    private int numCacciatore;
     JProgressBar scudo,vita;
     JPanel arma;
     
@@ -46,7 +43,6 @@ public class FormGioco extends javax.swing.JFrame {
         initComponents();
         
         this.g=gi;
-        this.numCacciatore=nC;
         
         JPanel panel = new JPanel() {
             Image immagineSfondoGioco=new ImageIcon("immagini/sfondoGioco.jpg").getImage();
@@ -323,6 +319,7 @@ public class FormGioco extends javax.swing.JFrame {
                 }
         };
         panelImpostazioni.add(impostazioni);
+        panelImpostazioni.setOpaque(false);
         for(int i=0;i<6;i++){
             panelImpostazioni.add(new JLabel(""));
         }
@@ -335,7 +332,12 @@ public class FormGioco extends javax.swing.JFrame {
         
         JPanel panelTextArea=new JPanel();
         JTextArea textArea=new JTextArea();
-        //mettere che non è modificabile
+        
+        textArea.setEditable(false);
+        
+        panelTextArea.setLayout(new BorderLayout());
+        panelTextArea.setOpaque(false);
+        
         panelTextArea.add(textArea);
         
         panelDX.add(panelTextArea,gbcDestra);
@@ -345,6 +347,7 @@ public class FormGioco extends javax.swing.JFrame {
         gbcDestra.weighty = 0.1;
         
         JPanel vuotoDX=new JPanel();
+        vuotoDX.setOpaque(false);
         
         panelDX.add(vuotoDX,gbcDestra);
         
@@ -365,7 +368,7 @@ public class FormGioco extends javax.swing.JFrame {
 
                     g2d.dispose();
                 }
-        };;
+        };
         arma.setLayout(new BorderLayout());
         
         panelDX.add(arma,gbcDestra);
@@ -428,7 +431,7 @@ public class FormGioco extends javax.swing.JFrame {
 
             g2d.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
 
-            g2d.drawImage(img, x, y, drawW, drawH, null);
+            g2d.drawImage(img, x, y, drawW, drawH, this);
             g2d.dispose();
         }
     };

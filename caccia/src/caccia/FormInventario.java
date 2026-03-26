@@ -6,6 +6,9 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -37,6 +40,24 @@ public class FormInventario extends javax.swing.JFrame {
                 g.drawImage(immagineZaino, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        panel.setLayout(new GridLayout(2,1,10,10));
+        
+        //panelSopra
+        JPanel panelSopra=new JPanel();
+        panelSopra.setLayout(new GridBagLayout());
+        GridBagConstraints gbcSopra=new GridBagConstraints();
+        panelSopra.setOpaque(false);
+        
+        //pezzo vuotoSopra
+        gbcSopra.gridx=1;
+        gbcSopra.weightx=0.34;
+        
+        JPanel vuotoSopra=new JPanel();
+        vuotoSopra.setOpaque(false);
+        
+        panelSopra.add(vuotoSopra,gbcSopra);
+        
+        //pezzo con oggetti inventario
         
         
         this.setLayout(new BorderLayout());

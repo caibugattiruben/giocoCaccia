@@ -10,7 +10,7 @@ package caccia;
  */
 public class gestoreForm {
     GestoreCaccia gestore;
-    AvvioGioco formAvvio=new AvvioGioco(this);
+    AvvioGioco formAvvio;
     SceltaPersonaggio formPersonaggio;
     Mercante formMercante;
     FormGioco formGioco;
@@ -23,12 +23,14 @@ public class gestoreForm {
     }
 
     public void avvio() {
-        new AvvioGioco(this).setVisible(true);
+        formAvvio=new AvvioGioco(this);
+        formAvvio.setVisible(true);
     }
 
     public void newGameScelto(int w, int h){
         formPersonaggio = new SceltaPersonaggio(this, w, h);
         formPersonaggio.setVisible(true);
+        formAvvio.dispose();
     }
 
     public void aproMercante(int w, int h){
@@ -47,15 +49,15 @@ public class gestoreForm {
     }
 
     public void sceltaPersonaggioCliccata(){
-        gestore.sceltaPersonaggio();
+        gestore.setPersonaggio(sceltaPersonaggio());
     }
 
     public Cacciatore sceltaPersonaggio(){
         switch (nCacciatore){
-            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null));
-            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null));
-            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",100), null));
-            case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null));
+            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null),100,50);
+            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50)),20,40);
+            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",100), null),45,40);
+            case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null),10,100);
         }
         return null;
     }
