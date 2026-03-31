@@ -5,6 +5,7 @@
 package caccia;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -45,21 +46,70 @@ public class FormInventario extends javax.swing.JFrame {
         //panelSopra
         JPanel panelSopra=new JPanel();
         panelSopra.setLayout(new GridBagLayout());
+        
+        GridBagConstraints gbc=new GridBagConstraints();
         GridBagConstraints gbcSopra=new GridBagConstraints();
         panelSopra.setOpaque(false);
         
         //pezzo vuotoSopra
-        gbcSopra.gridx=1;
-        gbcSopra.weightx=0.34;
+        gbc.gridx=1;
+        gbc.weightx=0.34;
+        gbc.fill = GridBagConstraints.BOTH;
         
         JPanel vuotoSopra=new JPanel();
         vuotoSopra.setOpaque(false);
         
+        //pezzo con oggetti inventario
+        gbcSopra.gridy=1;
+        gbcSopra.gridheight = GridBagConstraints.REMAINDER;
+        
+        gbcSopra.gridx=0;
+        gbcSopra.weightx=0.33;
+       
         panelSopra.add(vuotoSopra,gbcSopra);
         
-        //pezzo con oggetti inventario
+        gbcSopra.gridx=1;
+        gbcSopra.weightx=0.67;
         
+        JPanel bottoni=new JPanel();
+        bottoni.setLayout(new GridBagLayout());
+        GridBagConstraints gbcBottoni=new GridBagConstraints();
         
+        gbcBottoni.gridx=1;
+        gbcBottoni.weightx=1;
+        gbcBottoni.gridheight = GridBagConstraints.REMAINDER;
+        
+        gbcBottoni.weighty=0.16;
+        bottoni.add(new JPanel(),gbcBottoni);
+        
+        gbcBottoni.weighty=0.18;
+        JPanel oggetto1=new JPanel();
+        oggetto1.setBackground(Color.GREEN);
+        bottoni.add(oggetto1,gbcBottoni);
+        
+        gbcBottoni.weighty=0.05;
+        bottoni.add(new JPanel(),gbcBottoni);
+        
+        gbcBottoni.weighty=0.18;
+        JPanel oggetto2=new JPanel();
+        oggetto2.setBackground(Color.GREEN);
+        bottoni.add(oggetto2,gbcBottoni);
+        
+        gbcBottoni.weighty=0.05;
+        bottoni.add(new JPanel(),gbcBottoni);
+        
+        gbcBottoni.weighty=0.18;
+        JPanel oggetto3=new JPanel();
+        oggetto3.setBackground(Color.GREEN);
+        bottoni.add(oggetto3,gbcBottoni);
+        
+        gbcBottoni.weighty=0.2;
+        bottoni.add(new JPanel(),gbcBottoni);
+        
+        panelSopra.add(bottoni,gbcSopra);
+        
+        panel.add(panelSopra);
+        panel.add(new JPanel());
         this.setLayout(new BorderLayout());
         this.add(panel);
         
