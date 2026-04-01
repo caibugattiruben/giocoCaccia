@@ -52,15 +52,14 @@ public class FormInventario extends javax.swing.JFrame {
         panelSopra.setOpaque(false);
         
         //pezzo vuotoSopra
-        gbc.gridx=1;
+        gbc.gridx=0;
         gbc.weightx=0.34;
         gbc.fill = GridBagConstraints.BOTH;
         
         JPanel vuotoSopra=new JPanel();
         vuotoSopra.setOpaque(false);
         
-        //pezzo con oggetti inventario
-        gbcSopra.gridy=1;
+        gbcSopra.gridy=0;
         gbcSopra.gridheight = GridBagConstraints.REMAINDER;
         
         gbcSopra.gridx=0;
@@ -79,30 +78,37 @@ public class FormInventario extends javax.swing.JFrame {
         gbcBottoni.weightx=1;
         gbcBottoni.gridheight = GridBagConstraints.REMAINDER;
         
+        gbcBottoni.gridy=0;
         gbcBottoni.weighty=0.16;
         bottoni.add(new JPanel(),gbcBottoni);
         
+        gbcBottoni.gridy=1;
         gbcBottoni.weighty=0.18;
         JPanel oggetto1=new JPanel();
         oggetto1.setBackground(Color.GREEN);
         bottoni.add(oggetto1,gbcBottoni);
         
+        gbcBottoni.gridy=2;
         gbcBottoni.weighty=0.05;
         bottoni.add(new JPanel(),gbcBottoni);
         
+        gbcBottoni.gridy=3;
         gbcBottoni.weighty=0.18;
         JPanel oggetto2=new JPanel();
         oggetto2.setBackground(Color.GREEN);
         bottoni.add(oggetto2,gbcBottoni);
         
+        gbcBottoni.gridy=4;
         gbcBottoni.weighty=0.05;
         bottoni.add(new JPanel(),gbcBottoni);
         
+        gbcBottoni.gridy=5;
         gbcBottoni.weighty=0.18;
         JPanel oggetto3=new JPanel();
         oggetto3.setBackground(Color.GREEN);
         bottoni.add(oggetto3,gbcBottoni);
         
+        gbcBottoni.gridy=6;
         gbcBottoni.weighty=0.2;
         bottoni.add(new JPanel(),gbcBottoni);
         
@@ -110,6 +116,7 @@ public class FormInventario extends javax.swing.JFrame {
         
         panel.add(panelSopra);
         panel.add(new JPanel());
+        
         this.setLayout(new BorderLayout());
         this.add(panel);
         
