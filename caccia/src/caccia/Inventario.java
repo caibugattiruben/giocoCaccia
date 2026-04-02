@@ -39,4 +39,12 @@ public class Inventario {
             System.out.println(o);
         }
     }
+    
+    public Arma getArma() {
+        return ((Arma) oggetti.get(0));
+    }
+    
+    public ArrayList<Oggetto> getOggetti(){
+        return oggetti;
+    }
 }

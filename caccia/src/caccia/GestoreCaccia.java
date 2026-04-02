@@ -28,4 +28,11 @@ public class GestoreCaccia {
         cacciatore.contenutiInv();
     }
     
+    public Arma getArma(){
+        return cacciatore.getArma();
+    }
+    
+    public Cacciatore getCacciatore(){
+        return cacciatore;
+    }
 }

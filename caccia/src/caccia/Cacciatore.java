@@ -44,4 +44,12 @@ public class Cacciatore {
     public void contenutiInv(){
         inventario.cosaHo();
     }
+    
+    public Inventario getInventario(){
+        return inventario;
+    }
+    
+    public Arma getArma(){
+        return inventario.getArma();
+    } 
 }

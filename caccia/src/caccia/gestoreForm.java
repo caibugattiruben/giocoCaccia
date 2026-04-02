@@ -90,4 +90,12 @@ public class gestoreForm {
             formGioco.caricaPersonaggio(c);
         }
     }
+
+    public Arma getArma(){
+        return gestore.getArma();
+    }
+    
+    public Cacciatore getCacciatore(){
+        return gestore.getCacciatore();
+    }
 }

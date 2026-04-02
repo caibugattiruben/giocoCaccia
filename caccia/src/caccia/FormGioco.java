@@ -407,32 +407,32 @@ public class FormGioco extends javax.swing.JFrame {
         scudo.repaint();
 
         JPanel arma1 = new JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
 
-            int w = getWidth();
-            int h = getHeight();
+                int w = getWidth();
+                int h = getHeight();
 
-            Image img = new ImageIcon(c.getCollegamento(c.inventario.oggetti.get(0))).getImage();
+                Image img = new ImageIcon(c.getCollegamento(c.getArma())).getImage();
 
-            int imgW = img.getWidth(null);
-            int imgH = img.getHeight(null);
+                int imgW = img.getWidth(null);
+                int imgH = img.getHeight(null);
 
-            double scale = Math.min((double)w / imgW, (double)h / imgH) * 1.2;
-            int drawW = (int)(imgW * scale);
-            int drawH = (int)(imgH * scale);
+                double scale = Math.min((double)w / imgW, (double)h / imgH) * 1.2;
+                int drawW = (int)(imgW * scale);
+                int drawH = (int)(imgH * scale);
 
-            int x = (w - drawW) / 2;
-            int y = (h - drawH) / 2;
+                int x = (w - drawW) / 2;
+                int y = (h - drawH) / 2;
 
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-            g2d.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
+                g2d.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
 
-            g2d.drawImage(img, x, y, drawW, drawH, this);
-            g2d.dispose();
+                g2d.drawImage(img, x, y, drawW, drawH, this);
+                g2d.dispose();
         }
     };
 

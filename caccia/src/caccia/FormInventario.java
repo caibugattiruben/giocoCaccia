@@ -5,13 +5,17 @@
 package caccia;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +27,7 @@ public class FormInventario extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormInventario.class.getName());
     
     gestoreForm g;
+
     /**
      * Creates new form FormInventario
      */
@@ -34,7 +39,7 @@ public class FormInventario extends javax.swing.JFrame {
         this.g=ge;
         
         JPanel panel = new JPanel() {
-            Image immagineZaino=new ImageIcon("immagini/zainoAperto.png").getImage();
+            Image immagineZaino=new ImageIcon("immagini/zainoApero.png").getImage();
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -43,80 +48,151 @@ public class FormInventario extends javax.swing.JFrame {
         };
         panel.setLayout(new GridLayout(2,1,10,10));
         
-        //panelSopra
+        //-----------------------------------------SOPRA-----------------------------------------
         JPanel panelSopra=new JPanel();
         panelSopra.setLayout(new GridBagLayout());
-        
-        GridBagConstraints gbc=new GridBagConstraints();
-        GridBagConstraints gbcSopra=new GridBagConstraints();
         panelSopra.setOpaque(false);
+
+        GridBagConstraints gbcSopra = new GridBagConstraints();
+        gbcSopra.gridx = 0;
+        gbcSopra.fill = GridBagConstraints.BOTH;
+        gbcSopra.weightx = 1;
+
+       // RIGA 0 
+        gbcSopra.gridy = 0;
+        gbcSopra.weighty = 0.4; 
         
-        //pezzo vuotoSopra
-        gbc.gridx=0;
-        gbc.weightx=0.34;
-        gbc.fill = GridBagConstraints.BOTH;
-        
-        JPanel vuotoSopra=new JPanel();
+        JPanel vuotoSopra = new JPanel();
         vuotoSopra.setOpaque(false);
+        vuotoSopra.setLayout(new BorderLayout()); 
+
+        JButton btnFreccia = new JButton(){
+            Image immagine=new ImageIcon("immagini/freccia.png").getImage();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        btnFreccia.setFocusPainted(false);
+        btnFreccia.setContentAreaFilled(false); 
+        btnFreccia.setBorderPainted(false); 
         
-        gbcSopra.gridy=0;
-        gbcSopra.gridheight = GridBagConstraints.REMAINDER;
+        JPanel contenitoreDestra = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        contenitoreDestra.setOpaque(false);
+        contenitoreDestra.add(btnFreccia);
+
+        btnFreccia.addActionListener(e -> {
+            g.chiusuraInventario(getWidth(),getHeight());
+        });
+
+        vuotoSopra.add(contenitoreDestra, BorderLayout.NORTH);
         
-        gbcSopra.gridx=0;
-        gbcSopra.weightx=0.33;
-       
-        panelSopra.add(vuotoSopra,gbcSopra);
+        panelSopra.add(vuotoSopra, gbcSopra);
+
+        // RIGA 1 
+        gbcSopra.gridy = 1;
+        gbcSopra.weighty = 0.6; 
         
-        gbcSopra.gridx=1;
-        gbcSopra.weightx=0.67;
-        
-        JPanel bottoni=new JPanel();
+        JPanel bottoni = new JPanel();
         bottoni.setLayout(new GridBagLayout());
-        GridBagConstraints gbcBottoni=new GridBagConstraints();
+
+        GridBagConstraints gbcBottoni = new GridBagConstraints();
+        gbcBottoni.fill = GridBagConstraints.BOTH;
+        gbcBottoni.weightx = 1;
+        gbcBottoni.weighty = 1;
+
+        // spazio tra gli oggetti
+        gbcBottoni.insets = new Insets(20, 50, 20, 50);
+
+        // OGGETTO 1 
+        gbcBottoni.gridx = 0;
+        gbcBottoni.gridy = 0;
+        JPanel oggetto1 = new JPanel();
+        JPanel ogg1=new JPanel();
+        oggetto1.setLayout(new BorderLayout());
+        oggetto1.add(ogg1);
+        JButton btn1=new JButton("USA");
+        oggetto1.add(btn1, BorderLayout.SOUTH);
+        bottoni.add(oggetto1, gbcBottoni);
+
+        // OGGETTO 2
+        gbcBottoni.gridx = 1;
+        JPanel oggetto2 = new JPanel();
+        JPanel ogg2=new JPanel();
+        oggetto2.setLayout(new BorderLayout());
+        oggetto2.add(ogg2);
+        JButton btn2=new JButton("USA");
+        oggetto2.add(btn2, BorderLayout.SOUTH);
+        bottoni.add(oggetto2, gbcBottoni);
+
+        // OGGETTO 3 
+        gbcBottoni.gridx = 2;
+        JPanel oggetto3 = new JPanel();
+        JPanel ogg3=new JPanel();
+        oggetto3.setLayout(new BorderLayout());
+        oggetto3.add(ogg3);
+        JButton btn3=new JButton("USA");
+        oggetto3.add(btn3, BorderLayout.SOUTH);
+        bottoni.add(oggetto3, gbcBottoni);
         
-        gbcBottoni.gridx=1;
-        gbcBottoni.weightx=1;
-        gbcBottoni.gridheight = GridBagConstraints.REMAINDER;
-        
-        gbcBottoni.gridy=0;
-        gbcBottoni.weighty=0.16;
-        bottoni.add(new JPanel(),gbcBottoni);
-        
-        gbcBottoni.gridy=1;
-        gbcBottoni.weighty=0.18;
-        JPanel oggetto1=new JPanel();
-        oggetto1.setBackground(Color.GREEN);
-        bottoni.add(oggetto1,gbcBottoni);
-        
-        gbcBottoni.gridy=2;
-        gbcBottoni.weighty=0.05;
-        bottoni.add(new JPanel(),gbcBottoni);
-        
-        gbcBottoni.gridy=3;
-        gbcBottoni.weighty=0.18;
-        JPanel oggetto2=new JPanel();
-        oggetto2.setBackground(Color.GREEN);
-        bottoni.add(oggetto2,gbcBottoni);
-        
-        gbcBottoni.gridy=4;
-        gbcBottoni.weighty=0.05;
-        bottoni.add(new JPanel(),gbcBottoni);
-        
-        gbcBottoni.gridy=5;
-        gbcBottoni.weighty=0.18;
-        JPanel oggetto3=new JPanel();
-        oggetto3.setBackground(Color.GREEN);
-        bottoni.add(oggetto3,gbcBottoni);
-        
-        gbcBottoni.gridy=6;
-        gbcBottoni.weighty=0.2;
-        bottoni.add(new JPanel(),gbcBottoni);
+        bottoni.setOpaque(false);
         
         panelSopra.add(bottoni,gbcSopra);
         
         panel.add(panelSopra);
-        panel.add(new JPanel());
         
+        //-----------------------------------------SOTTO-----------------------------------------
+        JPanel panelSotto = new JPanel();
+        panelSotto.setOpaque(false);
+        panelSotto.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbcSotto = new GridBagConstraints();
+        gbcSotto.gridx = 0;
+        gbcSotto.gridy = 0;
+
+        gbcSotto.weightx = 1;
+        gbcSotto.weighty = 1;
+        gbcSotto.fill = GridBagConstraints.BOTH;
+
+        gbcSotto.insets = new Insets(30, 30, 30, 30);
+
+        JPanel centro = new JPanel(){
+            Image immagine=new ImageIcon("immagini/sfondoArma.jpg").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
+        JPanel arma=new JPanel(){
+            Image immagine=new ImageIcon("immagini/"+g.getArma()+".png").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
+        centro.setLayout(new BorderLayout());
+        arma.setOpaque(false);
+        centro.add(arma);
+
+        panelSotto.add(centro, gbcSotto);
+
+        panel.add(panelSotto);
+        caricaBackpack( ogg1,ogg2,ogg3,g.getCacciatore(),btn1,btn2,btn3);
         this.setLayout(new BorderLayout());
         this.add(panel);
         
@@ -124,6 +200,42 @@ public class FormInventario extends javax.swing.JFrame {
         
     }
 
+    public void caricaBackpack(JPanel a1,JPanel a2,JPanel a3,Cacciatore c,JButton b1,JButton b2,JButton b3){
+        
+       Inventario inv=c.getInventario();
+       JPanel[] panel={a1,a2,a3};
+       JButton[] bottoni={b1,b2,b3};
+       boolean[] accesi={false,false,false};
+       
+        for(Oggetto o:inv.getOggetti()){
+            if(!(o instanceof Arma)){
+                JPanel provv=new JPanel(){
+                Image immagine=new ImageIcon(o.getCollegamento()).getImage();
+                @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g); 
+                        Graphics2D g2d = (Graphics2D) g.create();
+
+                        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                        g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                        g2d.dispose();
+                    }
+                };
+                panel[inv.getOggetti().indexOf(o)-1].setOpaque(false);
+                panel[inv.getOggetti().indexOf(o)-1].setLayout(new BorderLayout());
+                panel[inv.getOggetti().indexOf(o)-1].add(provv);
+                accesi[inv.getOggetti().indexOf(o)-1]=true;
+            }
+        }
+        
+        for(int i=0;i<accesi.length;i++){
+            if(accesi[i]==false){
+                bottoni[i].setEnabled(false);
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
