@@ -67,7 +67,8 @@ public class gestoreForm {
     }
 
     public void aperturaInventario(int w, int h){
-        formInventario = new FormInventario(this, w, h);
+        //formInventario = new FormInventario(this, w, h);
+        aproMercante(w,h);
         if (formGioco != null) formGioco.setVisible(false);
         formInventario.setVisible(true);
     }

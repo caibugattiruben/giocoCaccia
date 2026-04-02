@@ -108,8 +108,22 @@ public class FormInventario extends javax.swing.JFrame {
         // OGGETTO 1 
         gbcBottoni.gridx = 0;
         gbcBottoni.gridy = 0;
-        JPanel oggetto1 = new JPanel();
+        JPanel oggetto1 = new JPanel(){
+            Image immagine=new ImageIcon("immagini/sfondoSlotInv.png").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
         JPanel ogg1=new JPanel();
+        ogg1.setOpaque(false);
         oggetto1.setLayout(new BorderLayout());
         oggetto1.add(ogg1);
         JButton btn1=new JButton("USA");
@@ -118,8 +132,22 @@ public class FormInventario extends javax.swing.JFrame {
 
         // OGGETTO 2
         gbcBottoni.gridx = 1;
-        JPanel oggetto2 = new JPanel();
+        JPanel oggetto2 = new JPanel(){
+            Image immagine=new ImageIcon("immagini/sfondoSlotInv.png").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
         JPanel ogg2=new JPanel();
+        ogg2.setOpaque(false);
         oggetto2.setLayout(new BorderLayout());
         oggetto2.add(ogg2);
         JButton btn2=new JButton("USA");
@@ -128,8 +156,22 @@ public class FormInventario extends javax.swing.JFrame {
 
         // OGGETTO 3 
         gbcBottoni.gridx = 2;
-        JPanel oggetto3 = new JPanel();
+        JPanel oggetto3 = new JPanel(){
+            Image immagine=new ImageIcon("immagini/sfondoSlotInv.png").getImage();
+            @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); 
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+
+                    g2d.dispose();
+                }
+        };
         JPanel ogg3=new JPanel();
+        ogg3.setOpaque(false);
         oggetto3.setLayout(new BorderLayout());
         oggetto3.add(ogg3);
         JButton btn3=new JButton("USA");
@@ -155,7 +197,7 @@ public class FormInventario extends javax.swing.JFrame {
         gbcSotto.weighty = 1;
         gbcSotto.fill = GridBagConstraints.BOTH;
 
-        gbcSotto.insets = new Insets(30, 30, 30, 30);
+        gbcSotto.insets = new Insets(40, 100, 40, 100);
 
         JPanel centro = new JPanel(){
             Image immagine=new ImageIcon("immagini/sfondoArma.jpg").getImage();
@@ -223,6 +265,7 @@ public class FormInventario extends javax.swing.JFrame {
                         g2d.dispose();
                     }
                 };
+                provv.setOpaque(false);
                 panel[inv.getOggetti().indexOf(o)-1].setOpaque(false);
                 panel[inv.getOggetti().indexOf(o)-1].setLayout(new BorderLayout());
                 panel[inv.getOggetti().indexOf(o)-1].add(provv);
