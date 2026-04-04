@@ -10,7 +10,13 @@ package caccia;
  */
 public class Vestito extends Oggetto {
     
-    public Vestito(String n,String c){
-        super(n,c);
+    int scudo;
+    public Vestito(String n,String c,int s,int cc,int cp){
+        super(n,c,cc,cp);
+        this.scudo=s;
+    }
+    
+    public int getDifesa(){
+        return scudo;
     }
 }

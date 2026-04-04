@@ -12,9 +12,14 @@ public class Cura extends Oggetto {
     
     private int valore;
     
-    public Cura(String n,String c,int val){
-        super(n,c);
+    public Cura(String n,String c,int val,int cc,int cp){
+        super(n,c,cc,cp);
         this.valore=val;
+    }
+    
+    
+    public int getValore(){
+        return valore;
     }
     
     @Override

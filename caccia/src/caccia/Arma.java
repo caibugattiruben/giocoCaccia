@@ -12,8 +12,8 @@ public class Arma extends Oggetto {
     
     private int danno; 
     
-    public Arma(String n,String c,int d){
-        super(n,c);
+    public Arma(String n,String c,int d,int cc,int cp){
+        super(n,c,cc,cp);
         this.danno=d;
     }
     

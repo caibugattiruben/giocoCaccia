@@ -34,8 +34,14 @@ public class gestoreForm {
     }
 
     public void aproMercante(int w, int h){
+        formGioco.setVisible(false);
         formMercante = new Mercante(this, w, h);
         formMercante.setVisible(true);
+    }
+    
+    public void chiudoMercante(){
+        formMercante.setVisible(false);
+        formGioco.setVisible(true);
     }
 
     public void aproGioco(int w, int h, int nCac){
@@ -54,10 +60,10 @@ public class gestoreForm {
 
     public Cacciatore sceltaPersonaggio(){
         switch (nCacciatore){
-            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null),100,50);
-            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50)),20,40);
-            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",100), null),45,40);
-            case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20), null),10,100);
+            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),100,50);
+            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50,0,0)),20,40);
+            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",100,0,0), null),45,40);
+            case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),10,100);
         }
         return null;
     }
@@ -67,8 +73,7 @@ public class gestoreForm {
     }
 
     public void aperturaInventario(int w, int h){
-        //formInventario = new FormInventario(this, w, h);
-        aproMercante(w,h);
+        formInventario = new FormInventario(this, w, h);
         if (formGioco != null) formGioco.setVisible(false);
         formInventario.setVisible(true);
     }
@@ -98,5 +103,13 @@ public class gestoreForm {
     
     public Cacciatore getCacciatore(){
         return gestore.getCacciatore();
+    }
+    
+    public int[] getRisorse(){
+        return gestore.getRisorse();
+    }
+    
+    public void compraOgg(Oggetto o){
+        gestore.oggettoComprato(o);
     }
 }

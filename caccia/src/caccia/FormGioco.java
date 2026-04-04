@@ -318,6 +318,9 @@ public class FormGioco extends javax.swing.JFrame {
                     g2d.dispose();
                 }
         };
+        impostazioni.addActionListener(e -> {
+            g.aproMercante(w,h);
+        }); 
         panelImpostazioni.add(impostazioni);
         panelImpostazioni.setOpaque(false);
         for(int i=0;i<6;i++){

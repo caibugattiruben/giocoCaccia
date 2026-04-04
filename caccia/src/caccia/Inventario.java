@@ -23,7 +23,12 @@ public class Inventario {
     }
 
     public void aggiungiOggetto(Oggetto o) {
-        oggetti.add(o);
+        if(oggetti.size()!=4){
+            oggetti.add(o);
+        }else{
+            System.out.println("inventario pieno");
+        }
+        
     }
     
     public int getDanno(){
@@ -42,6 +47,11 @@ public class Inventario {
     
     public Arma getArma() {
         return ((Arma) oggetti.get(0));
+    }
+    
+    public void setArma(Oggetto o){
+        oggetti.set(0,(Arma) o);
+        
     }
     
     public ArrayList<Oggetto> getOggetti(){

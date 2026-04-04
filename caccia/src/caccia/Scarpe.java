@@ -10,7 +10,13 @@ package caccia;
  */
 public class Scarpe extends Oggetto {
     
-    public Scarpe(String n,String c){
-        super(n,c);
+    int valocita;
+    public Scarpe(String n,String c,int v,int cc,int cp){
+        super(n,c,cc,cp);
+        this.valocita=v;
+    }
+    
+    public int getVelocita(){
+        return valocita;
     }
 }

@@ -12,13 +12,30 @@ public class Oggetto {
     
     protected String nome;
     private String collegamentoFoto;
+    int costoCarne,costoPelle;
     
-    public Oggetto(String n,String c){
+    public Oggetto(String n,String c,int cc,int cp){
         this.nome=n;
         this.collegamentoFoto=c;
+        this.costoCarne=cc;
+        this.costoPelle=cp;
     }
     
     public String getCollegamento(){
         return collegamentoFoto;
+    }
+    
+    public String getNome(){
+        return nome;
+    }
+    
+    public int[] getCosto(){
+        int[] costo={costoCarne,costoPelle};
+        return costo;
+    }
+    
+    public int[] getPrezzo(){
+        int[] prezzo={costoCarne,costoPelle};
+        return prezzo;
     }
 }

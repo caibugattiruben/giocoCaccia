@@ -35,4 +35,25 @@ public class GestoreCaccia {
     public Cacciatore getCacciatore(){
         return cacciatore;
     }
+    
+    public int[] getRisorse(){
+        return cacciatore.getRisorse();
+    }
+    
+    public void oggettoComprato(Oggetto o){
+        if (o instanceof Arma) {
+            cacciatore.setArma(o);
+            gForm.caricaPersonaggio(cacciatore);
+        } 
+        else if (o instanceof Cura) {
+            cacciatore.aggOggetto(o);
+        } 
+        else if (o instanceof Scarpe) {
+            cacciatore.setVelocita(((Scarpe) o).getVelocita());
+        } 
+        else if (o instanceof Vestito) {
+            cacciatore.setScudo(((Vestito) o).getDifesa());
+            gForm.caricaPersonaggio(cacciatore);
+        } 
+    }
 }
