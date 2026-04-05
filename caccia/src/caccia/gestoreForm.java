@@ -15,6 +15,7 @@ public class gestoreForm {
     Mercante formMercante;
     FormGioco formGioco;
     FormInventario formInventario;
+    statPlayer formStat;
     
     private int nCacciatore;
     
@@ -111,5 +112,16 @@ public class gestoreForm {
     
     public void compraOgg(Oggetto o){
         gestore.oggettoComprato(o);
+    }
+    
+    public void aproStat(int w,int h){
+        formStat=new statPlayer(w,h,this,gestore.getCacciatore(),nCacciatore);
+        formGioco.setVisible(false);
+        formStat.setVisible(true);
+    }
+    
+    public void chiudoStat(){
+        formStat.dispose();
+        formGioco.setVisible(true);
     }
 }

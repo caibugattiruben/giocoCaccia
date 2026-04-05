@@ -10,7 +10,7 @@ package caccia;
  */
 public class Cacciatore {
     
-    private int vita,danno,velocità,scudo,carne=0,pelle=0;
+    private int vita,danno,velocità,scudo,carne=10,pelle=10;
     protected Inventario inventario;
     
     public Cacciatore(Inventario inv,int v,int s){

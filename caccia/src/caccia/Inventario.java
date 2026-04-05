@@ -57,4 +57,8 @@ public class Inventario {
     public ArrayList<Oggetto> getOggetti(){
         return oggetti;
     }
+    
+    public Oggetto getOggAllaPos(int pos){
+        return oggetti.get(pos);
+    }
 }

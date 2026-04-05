@@ -69,7 +69,7 @@ public class FormGioco extends javax.swing.JFrame {
         gbcSinistra.insets = new Insets(5,5,5,5);
 
         // --- IMMAGINE CACCIATORE ---
-        JPanel immagineCacciatore = new JPanel() {
+        JButton immagineCacciatore = new JButton() {
             Image immagine = new ImageIcon("immagini/g"+nC+"Face.png").getImage();
             @Override
             protected void paintComponent(Graphics g) {
@@ -77,6 +77,13 @@ public class FormGioco extends javax.swing.JFrame {
                 g.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        
+        immagineCacciatore.addActionListener(e -> {
+            this.w=this.getWidth();
+            this.h=this.getHeight();
+            g.aproStat(w,h);
+        }); 
+        
         immagineCacciatore.setOpaque(false);
         gbcSinistra.gridy = 0;
         gbcSinistra.gridheight = 1;
@@ -499,3 +506,4 @@ public class FormGioco extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
+

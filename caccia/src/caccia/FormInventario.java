@@ -217,15 +217,29 @@ public class FormInventario extends javax.swing.JFrame {
             Image immagine=new ImageIcon("immagini/"+g.getArma()+".png").getImage();
             @Override
                 protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
+                super.paintComponent(g);
 
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                int w = getWidth();
+                int h = getHeight();
 
-                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
 
-                    g2d.dispose();
-                }
+                int imgW = immagine.getWidth(null);
+                int imgH = immagine.getHeight(null);
+
+                double scale = Math.min((double)w / imgW, (double)h / imgH) * 1.2;
+                int drawW = (int)(imgW * scale);
+                int drawH = (int)(imgH * scale);
+
+                int x = (w - drawW) / 2;
+                int y = (h - drawH) / 2;
+
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+
+                g2d.drawImage(immagine, x, y, drawW, drawH, this);
+                g2d.dispose();
+        }
         };
         centro.setLayout(new BorderLayout());
         arma.setOpaque(false);
