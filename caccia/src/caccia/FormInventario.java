@@ -263,27 +263,36 @@ public class FormInventario extends javax.swing.JFrame {
        JButton[] bottoni={b1,b2,b3};
        boolean[] accesi={false,false,false};
        
-        for(Oggetto o:inv.getOggetti()){
-            if(!(o instanceof Arma)){
-                JPanel provv=new JPanel(){
-                Image immagine=new ImageIcon(o.getCollegamento()).getImage();
-                @Override
+        for (Oggetto o : inv.getOggetti()) {
+            if (!(o instanceof Arma)) {
+                int index = inv.getOggetti().indexOf(o) - 1; 
+
+                JPanel provv = new JPanel() {
+                    Image immagine = new ImageIcon(o.getCollegamento()).getImage();
+                    @Override
                     protected void paintComponent(Graphics g) {
                         super.paintComponent(g); 
                         Graphics2D g2d = (Graphics2D) g.create();
-
-                        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
+                        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
                         g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
-
                         g2d.dispose();
                     }
                 };
+
                 provv.setOpaque(false);
-                panel[inv.getOggetti().indexOf(o)-1].setOpaque(false);
-                panel[inv.getOggetti().indexOf(o)-1].setLayout(new BorderLayout());
-                panel[inv.getOggetti().indexOf(o)-1].add(provv);
-                accesi[inv.getOggetti().indexOf(o)-1]=true;
+                panel[index].setOpaque(false);
+                panel[index].setLayout(new BorderLayout());
+                panel[index].add(provv);
+                accesi[index]=true;
+
+                bottoni[index].addActionListener(e -> {
+                    g.usoOggInv(o);
+                    bottoni[index].setEnabled(false);
+
+                    panel[index].removeAll();
+                    panel[index].revalidate();
+                    panel[index].repaint();
+                });
             }
         }
         

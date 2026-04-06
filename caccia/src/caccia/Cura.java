@@ -22,6 +22,10 @@ public class Cura extends Oggetto {
         return valore;
     }
     
+    public void usa(Cacciatore c){
+        c.setVita(valore);
+    }
+    
     @Override
     public String toString(){
         return nome;

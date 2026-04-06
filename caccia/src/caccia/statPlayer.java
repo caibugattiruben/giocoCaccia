@@ -6,6 +6,7 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -122,7 +123,21 @@ public class statPlayer extends javax.swing.JFrame {
     GridBagConstraints gbcRight = new GridBagConstraints();
 
     // 1. Stats 
-    JPanel statsPanel = new JPanel() ;
+    JPanel statsPanel = new JPanel(){ 
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D)g;
+            super.paintComponent(g);
+            
+            int[] parametro= new int[c.getStat().length+2];
+            for (int i = 0; i < c.getStat().length; i++) {
+                parametro[i] = c.getStat()[i];
+            }
+            parametro[4]=c.getRisorse()[0];
+            parametro[5]=c.getRisorse()[1];
+            scriviStat(parametro,g2d);
+        };
+    };
     statsPanel.setOpaque(false);
     statsPanel.setBorder(BorderFactory.createTitledBorder(null, "Stats Player", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, Color.WHITE));
     
@@ -210,6 +225,17 @@ public class statPlayer extends javax.swing.JFrame {
     this.add(mainPanel); 
 }
 
+    public void scriviStat(int[] stats,Graphics2D g2d){
+        String[] nomi = {"Vita","Attacco","Difesa","Velocità","Carne","Pelle"};
+        int spazioSopra=30,distanzaRighe=20;
+        
+        for (int i = 0; i < stats.length; i++) {
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2d.setFont(new Font("Arial", Font.BOLD, 16));
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(nomi[i] + ": " + stats[i], 20, spazioSopra + i * distanzaRighe);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

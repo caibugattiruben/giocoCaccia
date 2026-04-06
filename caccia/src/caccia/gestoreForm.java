@@ -114,6 +114,10 @@ public class gestoreForm {
         gestore.oggettoComprato(o);
     }
     
+    public void refreshDatiMercato(){
+        formMercante.setRisorse();
+    }
+    
     public void aproStat(int w,int h){
         formStat=new statPlayer(w,h,this,gestore.getCacciatore(),nCacciatore);
         formGioco.setVisible(false);
@@ -123,5 +127,9 @@ public class gestoreForm {
     public void chiudoStat(){
         formStat.dispose();
         formGioco.setVisible(true);
+    }
+    
+    public void usoOggInv(Oggetto o){
+        gestore.usoOgg(o);
     }
 }

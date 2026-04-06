@@ -10,7 +10,7 @@ package caccia;
  */
 public class Cacciatore {
     
-    private int vita,danno,velocità,scudo,carne=10,pelle=10;
+    private int vita,danno,velocità,scudo,carne=100,pelle=100;
     protected Inventario inventario;
     
     public Cacciatore(Inventario inv,int v,int s){
@@ -20,13 +20,15 @@ public class Cacciatore {
     }
     
     public void formaCacciatore(){
-        vita=100;
+        vita=20;
         danno=inventario.getDanno();
     }
     
     public int getVita(){
         return vita;
     }
+    
+    
     public int getScudo(){
         return scudo;
     }
@@ -35,6 +37,21 @@ public class Cacciatore {
     }
     public int getDanno(){
         return danno;
+    }
+    public int[] getStat(){
+        int[] stat={vita,danno,scudo,velocità};
+        return stat;
+    }
+    
+    public void setVita(int v){
+        this.vita=vita+v;
+        if(vita>100){
+            vita=100;
+        }
+    }
+    
+    public void setArma(Oggetto o){
+        inventario.setArma(o);
     }
     
     public void setVelocita(int v){
@@ -64,12 +81,15 @@ public class Cacciatore {
         return inventario.getArma();
     } 
     
-    public void setArma(Oggetto o){
-        inventario.setArma(o);
-    }
+    
     
     public int[] getRisorse(){
         int[] ris={carne,pelle};
         return ris;
+    }
+    
+    public void oggettoComprato(int cc,int cp){
+        this.carne=carne-cc;
+        this.pelle=pelle-cp; 
     }
 }

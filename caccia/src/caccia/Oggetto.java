@@ -34,8 +34,5 @@ public class Oggetto {
         return costo;
     }
     
-    public int[] getPrezzo(){
-        int[] prezzo={costoCarne,costoPelle};
-        return prezzo;
-    }
+        
 }

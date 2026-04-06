@@ -41,6 +41,8 @@ public class GestoreCaccia {
     }
     
     public void oggettoComprato(Oggetto o){
+        cacciatore.oggettoComprato(o.getCosto()[0], o.getCosto()[1]);
+        
         if (o instanceof Arma) {
             cacciatore.setArma(o);
             gForm.caricaPersonaggio(cacciatore);
@@ -55,5 +57,14 @@ public class GestoreCaccia {
             cacciatore.setScudo(((Vestito) o).getDifesa());
             gForm.caricaPersonaggio(cacciatore);
         } 
+        
+        gForm.refreshDatiMercato();
+    }
+    
+    public void usoOgg(Oggetto o){
+        Cura ogg=(Cura)o;
+        cacciatore.inventario.rimuoviOggetto(o);
+        ogg.usa(cacciatore);
+        caricaPersonaggio();
     }
 }

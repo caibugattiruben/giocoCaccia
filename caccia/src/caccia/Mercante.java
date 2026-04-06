@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ public class Mercante extends javax.swing.JFrame {
     JPanel oggettoInt;
     JLabel carne,pelle;
     Oggetto[] oggMercante;
+    ArrayList<JButton> bottoni=new ArrayList();
     /**
      * Creates new form Mercante
      */
@@ -300,9 +302,15 @@ public class Mercante extends javax.swing.JFrame {
         oggettoInt.setOpaque(false);
         p.add(oggettoInt);
         JButton btncompra=new JButton("COMPRA");
+        bottoni.add(btncompra);
         btncompra.addActionListener(e -> {
+            if(controlloInvenatarioPieno(g.getCacciatore())==true){
+            JOptionPane.showMessageDialog(null, "INVENTARIO PIENO", "INVENTARIO", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
             compra(oggMercante[pos]);
             btncompra.setEnabled(false);
+            }
         });
         
         p.add(btncompra,BorderLayout.SOUTH); 
@@ -328,7 +336,7 @@ public class Mercante extends javax.swing.JFrame {
         prezzo.setOpaque(false);
         prezzo.setLayout(new GridLayout(1,4,0,0));
         
-        int[] prezzoCCC=o.getPrezzo();
+        int[] prezzoCCC=o.getCosto();
         JLabel prezzoC=new JLabel(prezzoCCC[0]+"");
         JLabel prezzoP=new JLabel(prezzoCCC[1]+"");
         
@@ -454,7 +462,15 @@ public class Mercante extends javax.swing.JFrame {
     }
     
     public void compra(Oggetto o){
+        
         g.compraOgg(o);
+
+        for(JButton JB:bottoni){
+            int[] prezzo= oggMercante[(bottoni.indexOf(JB))].getCosto();
+            controlloAttivo(JB,prezzo);
+        }
+        
+        
     }
     
     public void controlloAttivo(JButton b,int[] p){
@@ -470,8 +486,16 @@ public class Mercante extends javax.swing.JFrame {
             b.setEnabled(false);
         }
     }
+    
+    public boolean controlloInvenatarioPieno(Cacciatore cacciatore){
+        if(cacciatore.inventario.oggetti.size()==4){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
         
-
 
     
     /**
@@ -525,4 +549,3 @@ public class Mercante extends javax.swing.JFrame {
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-

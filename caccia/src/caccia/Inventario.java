@@ -30,6 +30,14 @@ public class Inventario {
         }
         
     }
+    public void rimuoviOggetto(Oggetto o) {
+        if(oggetti.size()!=0){
+            oggetti.remove(o);
+        }else{
+            System.out.println("inventario vuoto");
+        }
+        
+    }
     
     public int getDanno(){
         return ((Arma) oggetti.get(0)).getDanno();
