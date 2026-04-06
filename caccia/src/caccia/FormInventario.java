@@ -199,20 +199,6 @@ public class FormInventario extends javax.swing.JFrame {
 
         gbcSotto.insets = new Insets(40, 100, 40, 100);
 
-        JPanel centro = new JPanel(){
-            Image immagine=new ImageIcon("immagini/sfondoArma.jpg").getImage();
-            @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
-
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
-
-                    g2d.dispose();
-                }
-        };
         JPanel arma=new JPanel(){
             Image immagine=new ImageIcon("immagini/"+g.getArma()+".png").getImage();
             @Override
@@ -241,11 +227,9 @@ public class FormInventario extends javax.swing.JFrame {
                 g2d.dispose();
         }
         };
-        centro.setLayout(new BorderLayout());
         arma.setOpaque(false);
-        centro.add(arma);
 
-        panelSotto.add(centro, gbcSotto);
+        panelSotto.add(arma, gbcSotto);
 
         panel.add(panelSotto);
         caricaBackpack( ogg1,ogg2,ogg3,g.getCacciatore(),btn1,btn2,btn3);

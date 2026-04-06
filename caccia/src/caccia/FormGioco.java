@@ -16,11 +16,14 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -37,14 +40,15 @@ public class FormGioco extends javax.swing.JFrame {
     gestoreForm g;
     private int w,h;
     JProgressBar scudo,vita;
-    JPanel arma;
+    JPanel arma, panelAnimale,panel,mainPanel;
+    JTextArea textArea;
     
     public FormGioco(gestoreForm gi,int nC) {
         initComponents();
         
         this.g=gi;
-        
-        JPanel panel = new JPanel() {
+        mainPanel=new JPanel();
+        panel = new JPanel() {
             Image immagineSfondoGioco=new ImageIcon("immagini/sfondoGioco.jpg").getImage();
             @Override
             protected void paintComponent(Graphics g) {
@@ -65,6 +69,7 @@ public class FormGioco extends javax.swing.JFrame {
         GridBagConstraints gbcSinistra = new GridBagConstraints();
         
         gbcSinistra.gridx = 0;
+        gbcSinistra.weightx=1.0;
         gbcSinistra.fill = GridBagConstraints.BOTH;
         gbcSinistra.insets = new Insets(5,5,5,5);
 
@@ -87,7 +92,6 @@ public class FormGioco extends javax.swing.JFrame {
         immagineCacciatore.setOpaque(false);
         gbcSinistra.gridy = 0;
         gbcSinistra.gridheight = 1;
-        gbcSinistra.weightx = 1.0;
         gbcSinistra.weighty = 0.3;
         gbcSinistra.fill = GridBagConstraints.BOTH;
         panelSX.add(immagineCacciatore, gbcSinistra);
@@ -100,7 +104,7 @@ public class FormGioco extends javax.swing.JFrame {
         gbcSinistra.gridheight = 1;
         gbcSinistra.weighty = 0.1;
         
-        panelStats.add(new JLabel(""));//per farle piu basse e fine
+        panelStats.add(new JLabel(""));
         
         //VITA
         vita=new JProgressBar(){
@@ -222,22 +226,22 @@ public class FormGioco extends javax.swing.JFrame {
         panelSX.add(panelInventario, gbcSinistra);
 
         // --- AGGIUNGO PANEL SX AL PANEL PRINCIPALE ---
+        gbc = new GridBagConstraints(); 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.15;
+        gbc.weightx = 0.20;
         gbc.weighty = 1.0;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.gridheight = 1;
         gbc.fill = GridBagConstraints.BOTH;
         panelSX.setOpaque(false);
         panel.add(panelSX, gbc);
         
-        gbc = new GridBagConstraints();//azzero gbc
         
         //------------------------------------ CX ------------------------------------
         panelCX.setLayout(new GridBagLayout());
         GridBagConstraints gbcCentro = new GridBagConstraints();
         
-        gbcCentro.gridx = 1;
+        gbcCentro.gridx = 0;
         gbcCentro.fill = GridBagConstraints.BOTH;
         gbcCentro.weightx = 1.0;
 
@@ -252,11 +256,14 @@ public class FormGioco extends javax.swing.JFrame {
         //ANIMALE
         gbcCentro.gridy = 1;
         gbcCentro.weighty = 0.4;
-        JPanel panelAnimale=new JPanel();
+        gbcCentro.insets = new Insets(50,70,5,70);
+        panelAnimale=new JPanel();
         panelAnimale.setOpaque(false);
+        panelAnimale.setLayout(new BorderLayout());
         panelCX.add(panelAnimale, gbcCentro);
         
         //VUOTO
+        gbcCentro.insets = new Insets(0,0,0,0);
         gbcCentro.gridy = 2;
         gbcCentro.weighty = 0.2;
 
@@ -279,125 +286,128 @@ public class FormGioco extends javax.swing.JFrame {
             panelAvanza.add(new JLabel(""));
         }
         panelAvanza.setOpaque(false);
+        avanza.addActionListener(e -> {
+            g.evento();
+        }); 
         panelCX.add(panelAvanza, gbcCentro);
         
         // --- AGGIUNGO PANEL CX AL PANEL PRINCIPALE ---
+        gbc = new GridBagConstraints(); 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.weightx = 0.6;
+        gbc.weightx = 0.60; 
         gbc.weighty = 1.0;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.gridheight = 1; 
         gbc.fill = GridBagConstraints.BOTH;
         panelCX.setOpaque(false);
-        
         panel.add(panelCX, gbc);
         
         
-        gbc = new GridBagConstraints();
-        //------------------------------------ DX ------------------------------------
+
+
+        //------------------------------------ DX (DESTRA) ------------------------------------
         panelDX.setLayout(new GridBagLayout());
         GridBagConstraints gbcDestra = new GridBagConstraints();
-        
-        gbcDestra.gridx = 2;
+
+        gbcDestra.gridx = 0;
         gbcDestra.fill = GridBagConstraints.BOTH;
         gbcDestra.weightx = 1.0;
-        
-        //IMPOSTAZIONI
+        gbcDestra.insets = new Insets(5, 5, 5, 5); 
+
+        // --- IMPOSTAZIONI ---
         gbcDestra.gridy = 0;
-        gbcDestra.weighty = 0.1;
-        
-        JPanel panelImpostazioni=new JPanel();
-        panelImpostazioni.setLayout(new GridLayout(3,3,20,20));
-        for(int i=0;i<2;i++){
-            panelImpostazioni.add(new JLabel(""));
-        }
-        JButton impostazioni=new JButton(){
-            Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
-            @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
+        gbcDestra.weighty = 0.15; 
 
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-                    g2d.drawImage(immagineIngr, 0, 0, getWidth(), getHeight(), this);
-
-                    g2d.dispose();
-                }
-        };
-        impostazioni.addActionListener(e -> {
-            g.aproMercante(w,h);
-        }); 
-        panelImpostazioni.add(impostazioni);
+        JPanel panelImpostazioni = new JPanel(new GridLayout(3, 3, 10, 10));
         panelImpostazioni.setOpaque(false);
-        for(int i=0;i<6;i++){
+
+        for (int i = 0; i < 2; i++){
             panelImpostazioni.add(new JLabel(""));
         }
-        
-        panelDX.add(panelImpostazioni,gbcDestra);
-        
-        //TEXT AREA
-        gbcDestra.gridy = 1;
-        gbcDestra.weighty = 0.3;
-        
-        JPanel panelTextArea=new JPanel();
-        JTextArea textArea=new JTextArea();
-        
-        textArea.setEditable(false);
-        
-        panelTextArea.setLayout(new BorderLayout());
-        panelTextArea.setOpaque(false);
-        
-        panelTextArea.add(textArea);
-        
-        panelDX.add(panelTextArea,gbcDestra);
-        
-        //VUOTO
-        gbcDestra.gridy = 2;
-        gbcDestra.weighty = 0.1;
-        
-        JPanel vuotoDX=new JPanel();
-        vuotoDX.setOpaque(false);
-        
-        panelDX.add(vuotoDX,gbcDestra);
-        
-        //ARMA
-        gbcDestra.gridy = 3;
-        gbcDestra.weighty = 0.5;
-        
-        arma = new JPanel(){
-            Image immagine=new ImageIcon("immagini/sfondoArma.jpg").getImage();
+
+        JButton impostazioni = new JButton() {
+            Image immagineIngr = new ImageIcon("immagini/ingranaggio.png").getImage();
             @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g); 
-                    Graphics2D g2d = (Graphics2D) g.create();
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2d.drawImage(immagineIngr, 0, 0, getWidth(), getHeight(), this);
+                g2d.dispose();
+            }
+        };
+        impostazioni.setContentAreaFilled(false);
+        impostazioni.setBorderPainted(false);
+        impostazioni.addActionListener(e -> g.aproMercante());
 
-                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        panelImpostazioni.add(impostazioni);
+        for (int i = 0; i < 6; i++) panelImpostazioni.add(new JLabel("")); 
 
-                    g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+        panelDX.add(panelImpostazioni, gbcDestra);
 
-                    g2d.dispose();
-                }
+        // --- TEXT AREA ---
+        gbcDestra.gridy = 1;
+        gbcDestra.weighty = 0.35; 
+
+        textArea = new JTextArea(5,1);
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setBackground(new Color(135,169,107)); 
+        textArea.setForeground(Color.WHITE);
+
+        JScrollPane scrollTextArea = new JScrollPane(textArea);
+        scrollTextArea.setOpaque(false);
+        scrollTextArea.getViewport().setOpaque(false);
+        scrollTextArea.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(0,40,36)), "LOG DI GIOCO", 0, 0, null, Color.WHITE));
+
+        panelDX.add(scrollTextArea, gbcDestra);
+
+        // --- 3. SPAZIO VUOTO (SEPARATOR) ---
+        gbcDestra.gridy = 2;
+        gbcDestra.weighty = 0.05;
+        JPanel vuotoDX = new JPanel();
+        vuotoDX.setOpaque(false);
+        panelDX.add(vuotoDX, gbcDestra);
+
+        // --- 4. SLOT ARMA EQUIPAGGIATA ---
+        gbcDestra.gridy = 3;
+        gbcDestra.weighty = 0.45; 
+
+        arma = new JPanel() {
+            Image immagineSfondoArma = new ImageIcon("immagini/sfondoArma.jpg").getImage();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2d.drawImage(immagineSfondoArma, 0, 0, getWidth(), getHeight(), this);
+                g2d.dispose();
+            }
         };
         arma.setLayout(new BorderLayout());
-        
-        panelDX.add(arma,gbcDestra);
-        
+        arma.setBorder(BorderFactory.createLineBorder(new Color(255, 215, 0), 2)); 
+
+        panelDX.add(arma, gbcDestra);
+
         // --- AGGIUNGO PANEL DX AL PANEL PRINCIPALE ---
+        gbc = new GridBagConstraints(); 
         gbc.gridx = 2;
         gbc.gridy = 0;
-        gbc.weightx = 0.25;
+        gbc.weightx = 0.20;
         gbc.weighty = 1.0;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.gridheight = 1; 
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
         panelDX.setOpaque(false);
-        
         panel.add(panelDX, gbc);
         
-        
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(panel);
         //AGGIUNGO PANEL CON TUTTO AL FORM
         this.setLayout(new BorderLayout());
-        this.add(panel);
+        this.add(mainPanel);
         
         
     }
@@ -415,41 +425,96 @@ public class FormGioco extends javax.swing.JFrame {
         scudo.setValue(c.getScudo());
         scudo.setString("SCUDO " + c.getScudo() + "%");
         scudo.repaint();
+        
+        arma.removeAll();
 
         JPanel arma1 = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                int w = getWidth();
-                int h = getHeight();
-
                 Image img = new ImageIcon(c.getCollegamento(c.getArma())).getImage();
 
+                int panelW = getWidth();
+                int panelH = getHeight();
                 int imgW = img.getWidth(null);
                 int imgH = img.getHeight(null);
 
-                double scale = Math.min((double)w / imgW, (double)h / imgH) * 1.2;
-                int drawW = (int)(imgW * scale);
-                int drawH = (int)(imgH * scale);
-
-                int x = (w - drawW) / 2;
-                int y = (h - drawH) / 2;
-
                 Graphics2D g2d = (Graphics2D) g.create();
                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                g2d.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
+                g2d.translate(panelW / 2.0, panelH / 2.0);
 
-                g2d.drawImage(img, x, y, drawW, drawH, this);
+                g2d.rotate(Math.toRadians(-90));
+
+                double scale = Math.min((double) panelH / imgW, (double) panelW / imgH);
+
+                int drawW = (int) (imgW * scale);
+                int drawH = (int) (imgH * scale);
+
+                g2d.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH, this);
+
                 g2d.dispose();
-        }
-    };
+            }
+        };
 
         arma1.setOpaque(false);
-        arma.add(arma1);
+        arma.setLayout(new BorderLayout());
+        arma.add(arma1, BorderLayout.CENTER);
         arma.revalidate();
         arma.repaint();
+    }
+    
+    
+    public void scriviMess(String mess){
+        textArea.append(mess+"\n");
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
+    
+    public void setImmagineEvento(String path) {
+        panelAnimale.removeAll(); 
+
+        panelAnimale.setLayout(new BorderLayout()); 
+
+        JPanel prov = new JPanel() {
+            Image img = new ImageIcon(path).getImage();
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (img != null) {
+                    Graphics2D g2d = (Graphics2D) g.create();
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+                    g2d.dispose();
+                }
+            }
+        };
+
+        prov.setOpaque(false);
+
+
+        panelAnimale.add(prov, BorderLayout.CENTER);
+        
+        
+
+        panelAnimale.revalidate();
+        panelAnimale.repaint();   
+    }
+    
+    public boolean sceltaAccessoMerc(){
+        while (true) {
+            int scelta = JOptionPane.showConfirmDialog(null, "Vuoi accedere al mercante?", "Mercante", JOptionPane.YES_NO_OPTION);
+
+            if (scelta == JOptionPane.YES_OPTION) {
+                return true;
+            } 
+            else if (scelta == JOptionPane.NO_OPTION || scelta == JOptionPane.CLOSED_OPTION) {
+                JOptionPane.showMessageDialog(null, "Non sei andato dal mercante", "Mercante", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+        }
     }
 
     /**

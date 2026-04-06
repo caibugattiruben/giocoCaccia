@@ -48,6 +48,9 @@ public class Cacciatore {
         if(vita>100){
             vita=100;
         }
+        else if(vita<0){
+            vita=0;
+        }
     }
     
     public void setArma(Oggetto o){
@@ -55,7 +58,14 @@ public class Cacciatore {
     }
     
     public void setVelocita(int v){
-        this.velocità=v;
+        this.velocità+=v;
+        
+        if(velocità<0){
+            velocità=0;
+        }
+        else if(velocità>100){
+            velocità=100;
+        }
     }
     public void setScudo(int s){
         this.scudo=s;

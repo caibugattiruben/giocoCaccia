@@ -16,6 +16,7 @@ public class gestoreForm {
     FormGioco formGioco;
     FormInventario formInventario;
     statPlayer formStat;
+    FormLotta formLotta;
     
     private int nCacciatore;
     
@@ -34,10 +35,13 @@ public class gestoreForm {
         formAvvio.dispose();
     }
 
-    public void aproMercante(int w, int h){
-        formGioco.setVisible(false);
-        formMercante = new Mercante(this, w, h);
-        formMercante.setVisible(true);
+    public void aproMercante(){
+        if(formGioco.sceltaAccessoMerc()==true){
+            formGioco.setVisible(false);
+            formMercante = new Mercante(this, formGioco.getWidth(),formGioco.getHeight());
+            formMercante.setVisible(true);
+        }
+        
     }
     
     public void chiudoMercante(){
@@ -132,4 +136,22 @@ public class gestoreForm {
     public void usoOggInv(Oggetto o){
         gestore.usoOgg(o);
     }
+    
+    
+    
+    
+    
+    public void evento(){
+        gestore.estraiEvento();
+    }
+    
+    public void setImmagineEvento(String path){
+        formGioco.setImmagineEvento(path);
+    }
+    
+    public void scriviMess(String mess){
+        formGioco.scriviMess(mess);
+    }
+    
+    
 }

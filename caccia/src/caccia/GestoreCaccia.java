@@ -67,4 +67,61 @@ public class GestoreCaccia {
         ogg.usa(cacciatore);
         caricaPersonaggio();
     }
+    
+    public void estraiEvento(){
+        
+        switch (EventManager.estraiEvento()){
+            case EVENTI.TRAPPOLA:
+                eventoTrappola();
+                setImmagine("immagini/trappola.png");
+                break;
+            case EVENTI.TEMPESTA:
+                eventoTempesta();
+                setImmagine("immagini/tempesta.png");
+                break;
+            case EVENTI.MERCANTE:
+                setImmagine("immagini/negozio.png");
+                eventoMercante();
+                break;
+            case EVENTI.TESORO:
+                eventoTesoro();
+                setImmagine("immagini/tesoro.png");
+                break;
+            case EVENTI.ANIMALE:
+                eventoAnimale();
+                break;
+        }
+    }
+    
+    public void eventoTrappola(){
+        cacciatore.setVita(-20);
+        gForm.scriviMess("OH NO HAI COLPITO UNA TRAPPOLA, PERDI 20 DI VITA");
+        caricaPersonaggio();
+    }
+    
+    public void eventoTempesta(){
+        cacciatore.setVelocita(-20);
+        gForm.scriviMess("OH NO E' ARRIVATA UNA TEMPESTA PERDI 20 DI VELOCITA'");
+    }
+    
+    public void eventoMercante(){
+        gForm.scriviMess("HAI TROVATO UN MERCANTE DEL BOSCO");
+        gForm.aproMercante();
+    }
+    
+    public void eventoTesoro(){
+        gForm.scriviMess("HAI TROVATO UN TESSORO DEL BOSCO");
+
+    }
+    
+    public void eventoAnimale(){
+        gForm.scriviMess("HAI TROVATO UN ANIMALE DEL BOSCO");
+
+    }
+    
+    
+    
+    public void setImmagine(String path){
+        gForm.setImmagineEvento(path);
+    }
 }
