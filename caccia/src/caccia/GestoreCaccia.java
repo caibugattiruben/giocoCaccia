@@ -11,6 +11,8 @@ package caccia;
 public class GestoreCaccia {
     gestoreForm gForm=new gestoreForm(this);
     Cacciatore cacciatore;
+    private int turnoAttuale = 0;
+    private int turnoFine = 50;
     
     public void avvio() {
         gForm.avvio();
@@ -88,7 +90,10 @@ public class GestoreCaccia {
                 setImmagine("immagini/tesoro.png");
                 break;
             case EVENTI.ANIMALE:
-                eventoAnimale();
+                Animale a=FileManager.estraiAnimale();
+                setImmagine(a.getPath());
+                eventoAnimale(a);
+                
                 break;
         }
     }
@@ -111,12 +116,25 @@ public class GestoreCaccia {
     
     public void eventoTesoro(){
         gForm.scriviMess("HAI TROVATO UN TESSORO DEL BOSCO");
+        int[] ris={20,20};
+        cacciatore.setRisorse(ris);
 
     }
     
-    public void eventoAnimale(){
-        gForm.scriviMess("HAI TROVATO UN ANIMALE DEL BOSCO");
-
+    public void eventoAnimale(Animale a){
+        if (a instanceof AnimalePacifico) {
+            gForm.scriviMess("Hai trovato un animale pacifico nel bosco. vai tranquillo.");
+        } 
+        else if (a instanceof AnimaleCacciagione) {
+            gForm.scriviMess("Hai trovato un animale da cacciare nel bosco. decidi se sparargli.");
+            gForm.lottaAnimale(true,a);
+        } 
+        else {
+           gForm.scriviMess("Hai trovato un animale aggressivo. ATTENTO.");    
+           gForm.lottaAnimale(false,a);
+                
+        }
+            
     }
     
     
@@ -124,4 +142,22 @@ public class GestoreCaccia {
     public void setImmagine(String path){
         gForm.setImmagineEvento(path);
     }
+    
+    public void incrementaTurno() {
+        this.turnoAttuale++;
+    }
+
+    public int getTurnoAttuale() { 
+        return turnoAttuale; 
+    }
+    public int getTurnoMax() {
+        return turnoFine; 
+    }
+    
+    public boolean controllaVittoria() {
+        return turnoAttuale >= turnoFine;
+    }
+    
+    
+    
 }

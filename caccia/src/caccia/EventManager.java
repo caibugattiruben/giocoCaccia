@@ -24,10 +24,10 @@ public class EventManager {
         else if(val<=20){
             return EVENTI.TEMPESTA;
         }
-        else if(val<=40){
+        else if(val<=30){
             return EVENTI.MERCANTE;
         }
-        else if(val<=50){
+        else if(val<=40){
             return EVENTI.TESORO;
         }
         else{

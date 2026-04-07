@@ -319,7 +319,7 @@ public class Mercante extends javax.swing.JFrame {
         JPanel info=new JPanel();
         info.setOpaque(false);
         info.setLayout(new BorderLayout());
-        JButton info1=new JButton();
+        JButton info1=new JButton("INFO");
         info1.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, getMessaggio(oggMercante[pos]), "Info Oggetto", JOptionPane.INFORMATION_MESSAGE);
         });
@@ -404,7 +404,7 @@ public class Mercante extends javax.swing.JFrame {
         int pos= rdn.nextInt(0,3);
             
         switch (oggMigl) {
-            case 0: oggMerc[pos] = new Arma("Carabina","immagini/carabina.png",100,10,10); break;
+            case 0: oggMerc[pos] = new Arma("Carabina","immagini/carabina.png",70,10,10); break;
             case 1: oggMerc[pos] = new Cura("Ampolla magica","immagini/ampollaMagica.png",100,10,10); break;
             case 2: oggMerc[pos] = new Scarpe("Scarpe veloci","immagini/scarpe1.png",100,10,10); break;
             case 3: oggMerc[pos] = new Vestito("Vestito pesante","immagini/vestito1.png",100,10,10); break;
@@ -419,8 +419,8 @@ public class Mercante extends javax.swing.JFrame {
                     case 0: 
                         oggQuale = rdn.nextInt(0,3);
                         switch (oggQuale) {
-                            case 0: oggMerc[i] = new Arma("Doppietta","immagini/doppietta.png",80,5,7); break;
-                            case 1: oggMerc[i] = new Arma("Automatico","immagini/automatico.png",50,4,2); break;
+                            case 0: oggMerc[i] = new Arma("Doppietta","immagini/doppietta.png",50,5,7); break;
+                            case 1: oggMerc[i] = new Arma("Automatico","immagini/automatico.png",30,4,2); break;
                             case 2: oggMerc[i] = new Arma("Pistola","immagini/pistola.png",20,2,2); break;
                         }
                         break;

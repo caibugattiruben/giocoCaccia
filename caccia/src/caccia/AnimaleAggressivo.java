@@ -13,21 +13,18 @@ public class AnimaleAggressivo extends Animale {
     private int vita,danno,velocita;
     
     public AnimaleAggressivo(String n,int v,int d,int vel){
-        super(n);
+        super(n,v);
         
-        this.vita=v;
         this.danno=d;
         this.velocita=v;
     }
     
-    public void attacca(){
-        
+    
+    public int getAttacco(){
+        return danno;
     }
     
-    public void subitoColpo(int v){
-        this.vita=vita-v;
-        if(vita<0){
-            vita=0;
-        }
+    public int getVel(){
+        return velocita;
     }
 }

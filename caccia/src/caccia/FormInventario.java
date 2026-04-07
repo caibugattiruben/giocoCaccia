@@ -16,6 +16,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -31,7 +32,7 @@ public class FormInventario extends javax.swing.JFrame {
     /**
      * Creates new form FormInventario
      */
-    public FormInventario(gestoreForm ge,int w,int h) {
+    public FormInventario(gestoreForm ge,int w,int h,JFrame formProv) {
         initComponents();
         
         this.setSize(w, h);
@@ -83,7 +84,7 @@ public class FormInventario extends javax.swing.JFrame {
         contenitoreDestra.add(btnFreccia);
 
         btnFreccia.addActionListener(e -> {
-            g.chiusuraInventario(getWidth(),getHeight());
+            g.chiusuraInventario(formProv);
         });
 
         vuotoSopra.add(contenitoreDestra, BorderLayout.NORTH);

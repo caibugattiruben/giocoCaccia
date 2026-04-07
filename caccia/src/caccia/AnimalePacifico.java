@@ -10,7 +10,7 @@ package caccia;
  */
 public class AnimalePacifico extends Animale {
     
-    public AnimalePacifico(String n){
-        super(n);
+    public AnimalePacifico(String n,int v){
+        super(n,v);
     }
 }

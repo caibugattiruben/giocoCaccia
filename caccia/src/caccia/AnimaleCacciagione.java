@@ -11,11 +11,19 @@ package caccia;
 public class AnimaleCacciagione extends Animale {
     private int vita,carne,pelle;
     public AnimaleCacciagione(String n,int v,int c,int p){
-        super(n);
+        super(n,v);
         
-        this.vita=v;
         this.carne=c;
         this.pelle=p;
         
     }
+    
+    public int getCarne(){
+        return carne;
+    }
+    
+    public int getPelle(){
+        return pelle;
+    }
+
 }

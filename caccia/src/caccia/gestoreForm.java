@@ -4,6 +4,8 @@
  */
 package caccia;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author caibugatti.ruben
@@ -49,13 +51,20 @@ public class gestoreForm {
         formGioco.setVisible(true);
     }
 
-    public void aproGioco(int w, int h, int nCac){
+    public void creoGioco(int w, int h, int nCac){
         if (formPersonaggio != null) {
             formPersonaggio.dispose();
         }
+        
         formGioco = new FormGioco(this, nCac);
-        formGioco.setSize(w, h);
+        
+        aproGioco(w,h);
+        
+    }
+    
+    public void aproGioco(int w, int h){
         formGioco.setVisible(true);
+        formGioco.setSize(w, h);
         gestore.caricaPersonaggio();
     }
 
@@ -67,7 +76,7 @@ public class gestoreForm {
         switch (nCacciatore){
             case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),100,50);
             case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50,0,0)),20,40);
-            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",100,0,0), null),45,40);
+            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",70,0,0), null),45,40);
             case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),10,100);
         }
         return null;
@@ -77,15 +86,21 @@ public class gestoreForm {
         this.nCacciatore = n;
     }
 
-    public void aperturaInventario(int w, int h){
-        formInventario = new FormInventario(this, w, h);
-        if (formGioco != null) formGioco.setVisible(false);
+    public void aperturaInventario(int w, int h, JFrame formChiama) {
+        if (formChiama != null) formChiama.setVisible(false);
+
+        formInventario = new FormInventario(this, w, h, formChiama);
         formInventario.setVisible(true);
     }
 
-    public void chiusuraInventario(int w, int h){
-        if (formGioco != null) formGioco.setVisible(true);
-        if (formInventario != null) formInventario.dispose();
+    public void chiusuraInventario(JFrame formChiama) {
+        if (formChiama != null) {
+            formChiama.setVisible(true);
+        }
+
+        if (formInventario != null) {
+            formInventario.dispose();
+        }
     }
 
     public void caricoGioco(int w, int h){
@@ -153,5 +168,43 @@ public class gestoreForm {
         formGioco.scriviMess(mess);
     }
     
+    public void lottaAnimale(boolean quale,Animale a){
+        //SE TRUE ANIMALE CACC SE FALSE ANIMALE AGG
+        if(quale==true){
+            formGioco.sceltaLottaAnimale(a);
+        }
+        else{
+            formGioco.sceltaLottaAnimaleAgg(a);
+        }
+        
+    }
     
+    public void apriLotta(int w,int h,Animale a){
+        formLotta=new FormLotta(this,w,h,nCacciatore,a);
+        
+        formLotta.setVisible(true);
+        formGioco.setVisible(false);
+        
+    }
+    
+    public void fineLotta(int w,int h){
+        formLotta.dispose();
+        formGioco.setVisible(true);
+    }
+    
+    public void incrementaTurno() {
+        gestore.incrementaTurno();
+    }
+    
+    public int getTurnoAttuale(){
+        return gestore.getTurnoAttuale();
+    }
+    
+    public int getTurnoMax(){
+        return gestore.getTurnoMax();
+    }
+    
+    public boolean controllaVittoria(){
+        return gestore.controllaVittoria();
+    }
 }

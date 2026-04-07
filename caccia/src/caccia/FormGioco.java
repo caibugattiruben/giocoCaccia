@@ -6,6 +6,7 @@ package caccia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -40,8 +41,9 @@ public class FormGioco extends javax.swing.JFrame {
     gestoreForm g;
     private int w,h;
     JProgressBar scudo,vita;
-    JPanel arma, panelAnimale,panel,mainPanel;
+    JPanel arma, panelAnimale,panel,mainPanel, panelKm;
     JTextArea textArea;
+    JLabel lblTurni;
     
     public FormGioco(gestoreForm gi,int nC) {
         initComponents();
@@ -88,7 +90,8 @@ public class FormGioco extends javax.swing.JFrame {
             this.h=this.getHeight();
             g.aproStat(w,h);
         }); 
-        
+        immagineCacciatore.setContentAreaFilled(false);
+        immagineCacciatore.setBorderPainted(false);
         immagineCacciatore.setOpaque(false);
         gbcSinistra.gridy = 0;
         gbcSinistra.gridheight = 1;
@@ -215,8 +218,10 @@ public class FormGioco extends javax.swing.JFrame {
         };
         zaino.addActionListener(e -> {
             aggiornaGrandezze();
-            g.aperturaInventario(w,h);
+            g.aperturaInventario(w,h,this);
         }); 
+        zaino.setContentAreaFilled(false);
+        zaino.setBorderPainted(false);
         panelInventario.setLayout(new BorderLayout());
         panelInventario.add(zaino);
         panelInventario.setOpaque(false);
@@ -249,7 +254,12 @@ public class FormGioco extends javax.swing.JFrame {
         gbcCentro.gridy = 0;
         gbcCentro.weighty = 0.2;
 
-        JPanel panelKm=new JPanel();
+        lblTurni=new JLabel("PROGRESSO: 0/50 KM");
+        panelKm=new JPanel();
+        panelKm.setLayout(new BorderLayout());
+        lblTurni.setFont(new Font("Arial", Font.BOLD, 20));
+        lblTurni.setForeground(Color.WHITE);
+        panelKm.add(lblTurni, BorderLayout.CENTER);
         panelKm.setOpaque(false);
         panelCX.add(panelKm, gbcCentro);
         
@@ -287,6 +297,9 @@ public class FormGioco extends javax.swing.JFrame {
         }
         panelAvanza.setOpaque(false);
         avanza.addActionListener(e -> {
+            g.incrementaTurno();
+            aggiornaInterfacciaTurni();
+            g.getCacciatore().ricaricaAbilita();
             g.evento();
         }); 
         panelCX.add(panelAvanza, gbcCentro);
@@ -359,8 +372,7 @@ public class FormGioco extends javax.swing.JFrame {
         JScrollPane scrollTextArea = new JScrollPane(textArea);
         scrollTextArea.setOpaque(false);
         scrollTextArea.getViewport().setOpaque(false);
-        scrollTextArea.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(new Color(0,40,36)), "LOG DI GIOCO", 0, 0, null, Color.WHITE));
+        scrollTextArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(0,40,36)), "LOG DI GIOCO", 0, 0, null, Color.WHITE));
 
         panelDX.add(scrollTextArea, gbcDestra);
 
@@ -514,6 +526,69 @@ public class FormGioco extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Non sei andato dal mercante", "Mercante", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
+        }
+    }
+    
+    public void sceltaLottaAnimale(Animale a){
+        boolean continua=true;
+        while (continua) {
+            int scelta = JOptionPane.showConfirmDialog(null, "Vuoi sparare all'animale?", "Animale", JOptionPane.YES_NO_OPTION);
+
+            if (scelta == JOptionPane.YES_OPTION) {
+                g.apriLotta(this.getWidth(),this.getHeight(),a);
+                continua = false; 
+            } 
+            else if (scelta == JOptionPane.NO_OPTION || scelta == JOptionPane.CLOSED_OPTION) {
+                JOptionPane.showMessageDialog(null, "Non hai sparato all'animale , lui scappa", "Animale", JOptionPane.INFORMATION_MESSAGE);
+                continua = false; 
+            }
+        }
+    }
+    
+    public void sceltaLottaAnimaleAgg(Animale a){
+        Object[] opzioni = {"Lotta", "Scappa"};
+        boolean continua=true;
+        while (continua) {
+            int scelta = JOptionPane.showOptionDialog(null, "Vuoi lottare o scappare?", "Animale Aggressivo", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, opzioni, opzioni[0]);
+
+            if (scelta == 0) {
+                g.apriLotta(this.getWidth(),this.getHeight(),a);
+                continua = false; 
+            } 
+            else{
+                tentaFuga(a);
+                continua = false; 
+            } 
+            
+        }
+    }
+    
+    private void tentaFuga(Animale anim) {
+        int velCacciatore = g.getCacciatore().getVelocità();
+        int velAnimale = ((AnimaleAggressivo) anim).getVel(); 
+
+        double probabilita = Math.max(0.10, Math.min(0.80, 0.5 + (velCacciatore - velAnimale) * 0.05));
+
+        if (Math.random() <= probabilita) {
+            JOptionPane.showMessageDialog(this, "Fuga riuscita! Hai seminato il " + anim.getNome());
+        } else {
+            JOptionPane.showMessageDialog(this, "Fuga fallita! Il " + anim.getNome() + " ti ha raggiunto. Preparati a combattere!");
+            g.apriLotta(this.getWidth(), this.getHeight(), anim);
+        }
+    }
+    
+    public void aggiornaInterfacciaTurni() {
+        int attuale = g.getTurnoAttuale();
+        int massimo = g.getTurnoMax();
+
+        lblTurni.setText("PROGRESSO: " + attuale + " / " + massimo+" KM");
+
+        panelKm.revalidate();
+        panelKm.repaint();
+        
+        if (g.controllaVittoria()==true) {
+            JOptionPane.showMessageDialog(this, "HAI VINTO! Sei sopravvissuto a 50 KM nella foresta!");
+            System.exit(0);
         }
     }
 

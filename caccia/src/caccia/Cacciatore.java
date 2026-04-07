@@ -10,7 +10,7 @@ package caccia;
  */
 public class Cacciatore {
     
-    private int vita,danno,velocità,scudo,carne=100,pelle=100;
+    private int vita,danno,velocità,scudo,carne=5,pelle=5,cooldown;
     protected Inventario inventario;
     
     public Cacciatore(Inventario inv,int v,int s){
@@ -20,7 +20,7 @@ public class Cacciatore {
     }
     
     public void formaCacciatore(){
-        vita=20;
+        vita=100;
         danno=inventario.getDanno();
     }
     
@@ -101,5 +101,25 @@ public class Cacciatore {
     public void oggettoComprato(int cc,int cp){
         this.carne=carne-cc;
         this.pelle=pelle-cp; 
+    }
+    
+    public void setRisorse(int[] ris){
+        carne+=ris[0];
+        pelle+=ris[1];
+    }
+    
+    public String usaAbilita(Animale nemico) {
+        return "Questo cacciatore non ha un'abilità speciale definita.";
+    }
+
+    public void ricaricaAbilita() {
+        if (cooldown > 0) cooldown--;
+    }
+    
+    public int getCooldown(){ 
+        return cooldown; 
+    }
+    public void setCooldown(int cooldown) { 
+        this.cooldown = cooldown; 
     }
 }

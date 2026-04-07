@@ -14,4 +14,14 @@ public class CacciatoreVeloce extends Cacciatore {
         super(inv,v,s);
     }
 
+    @Override
+    public String usaAbilita(Animale nemico) {
+        if (this.getCooldown() > 0) {
+            return "Ricarica: " + this.getCooldown() + " turni";
+        }
+        
+        this.setCooldown(5);
+        
+        return "SCATTO FELINO"; 
+    }
 }
