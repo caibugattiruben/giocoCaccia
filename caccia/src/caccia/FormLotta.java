@@ -17,6 +17,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -262,7 +266,11 @@ public class FormLotta extends javax.swing.JFrame {
         pnlP2.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         JButton attacco=new JButton("ATTACCO");
-        attacco.addActionListener(e -> lotta());
+        attacco.addActionListener(e -> {
+            riproduciSparo();
+            lotta();
+            
+        });
         JButton abilità=new JButton("ABILITA'");
         abilità.addActionListener(e ->{
             Cacciatore c = gestore.getCacciatore();
@@ -405,7 +413,20 @@ public class FormLotta extends javax.swing.JFrame {
         pbNem.setString(animale.getNome().toUpperCase() + ": " + vitaGraficaNemico + " HP");
 
     }
+    public void riproduciSparo() {
+        try {
+            File fileAudio = new File("suoni/sparo.wav"); 
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(fileAudio);
 
+            Clip clip = AudioSystem.getClip();
+
+            clip.open(audioStream);
+
+            clip.start();
+
+        } catch (Exception ex) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

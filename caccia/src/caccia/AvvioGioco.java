@@ -15,9 +15,12 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,7 +44,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         this.g=g;
         gioco=this;
         
-        
+        riproduciSottofondo();
         Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
         
         JPanel panel = new JPanel() {
@@ -249,6 +252,22 @@ public class AvvioGioco extends javax.swing.JFrame {
         this.add(panel);
         this.setBounds(0, 0, 830, 650);
     }
+    public void riproduciSottofondo() {
+        try {
+            File fileAudio = new File("suoni/sottofondo.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(fileAudio);
+
+            Clip musica = AudioSystem.getClip();
+            musica.open(audioStream);
+
+            musica.loop(Clip.LOOP_CONTINUOUSLY);
+
+            musica.start();
+
+        } catch (Exception ex) {
+         
+        }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
