@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -201,6 +202,31 @@ public class AvvioGioco extends javax.swing.JFrame {
         impostazioni.setContentAreaFilled(false);
         impostazioni.setFocusPainted(false);
         impostazioni.setOpaque(false);
+        impostazioni.addActionListener(e -> {
+            String manuale = "--- GUIDA COMPLETA DI CACCIA ---\n\n" +
+                "1. OBIETTIVO E PROGRESSIONE\n" +
+                "   Il tuo scopo è percorrere 50 KM nella foresta.\n" +
+                "   Ogni chilometro può nascondere un'insidia o un'opportunità.\n\n" +
+                "2. STATISTICHE PERSONAGGIO\n" +
+                "   - VITA: La tua salute. Se scende a 0, la partita termina.\n" +
+                "   - SCUDO: Protegge la vita assorbendo i danni nemici.\n" +
+                "   - VELOCITÀ: Influenza la tua capacità di fuggire.\n" +
+                "   - DANNO: La potenza dei tuoi attacchi contro le prede.\n" +
+                "   - CURE: Usa gli oggetti medici per ripristinare la salute.\n\n" +
+                "3. IL MERCANTE E LE RISORSE\n" +
+                "   Incontra il Mercante durante il viaggio per scambiare Carne e Pelle.\n" +
+                "   - ACQUISTA: Armi migliori (come la Carabina), kit di cura, scarpe per aumentare la velocità oppure giacconi che ti faranno da scudo contro gli animali.\n"+
+                "4. EVENTI CASUALI E BESTIARIO:\n" +
+                "   Ogni KM può attivare imboscate, ritrovamenti o meteo avverso.\n" +
+                "   Animali:\n" +
+                "   - PACIFICI: Inoffensivi (es. Scoiattolo, Gatto).\n" +
+                "   - CACCIAGIONE: Offrono risorse ma scappano (es. Cervo, Cinghiale).\n" +
+                "   - AGGRESSIVI: Ti attaccano direttamente (es. Lupo, Orso).\n" +
+                "5. SALVATAGGIO:\n" +
+                "   Usa il menu di salvataggio per salvare i progressi.\n";
+
+            JOptionPane.showMessageDialog(null, manuale, "Manuale del Cacciatore", JOptionPane.INFORMATION_MESSAGE);
+        });
         
         for(int i=0;i<9;i++){
             if(i==8){
