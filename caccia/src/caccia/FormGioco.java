@@ -301,6 +301,7 @@ public class FormGioco extends javax.swing.JFrame {
             aggiornaInterfacciaTurni();
             g.getCacciatore().ricaricaAbilita();
             g.evento();
+            verificaSconfitta();
         }); 
         panelCX.add(panelAvanza, gbcCentro);
         
@@ -599,6 +600,20 @@ public class FormGioco extends javax.swing.JFrame {
             System.exit(0);
         }
     }
+    
+    private void verificaSconfitta() {
+    Cacciatore c = g.getCacciatore();
+
+        if (c.getVita() <= 0) {
+            JOptionPane.showMessageDialog(this, 
+                "IL TUO CACCIATORE È MORTO!\nNon hai più vita per continuare la caccia.", 
+                "GAME OVER", 
+                JOptionPane.ERROR_MESSAGE);
+
+
+            System.exit(0); 
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

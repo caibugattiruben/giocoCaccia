@@ -40,6 +40,12 @@ public class Cacciatore implements Serializable{
     public int getDanno(){
         return danno;
     }
+    
+    public void setDanno(){
+        Arma a=(Arma) inventario.oggetti.get(0);
+        danno=a.getDanno();
+    }
+    
     public int[] getStat(){
         int[] stat={vita,danno,scudo,velocità};
         return stat;
@@ -57,6 +63,7 @@ public class Cacciatore implements Serializable{
     
     public void setArma(Oggetto o){
         inventario.setArma(o);
+        setDanno();
     }
     
     public void setVelocita(int v){

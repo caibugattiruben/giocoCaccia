@@ -464,7 +464,7 @@ public class Mercante extends javax.swing.JFrame {
     public void compra(Oggetto o){
         
         g.compraOgg(o);
-
+        
         for(JButton JB:bottoni){
             int[] prezzo= oggMercante[(bottoni.indexOf(JB))].getCosto();
             controlloAttivo(JB,prezzo);

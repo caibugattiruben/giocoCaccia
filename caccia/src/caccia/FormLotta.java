@@ -42,6 +42,7 @@ public class FormLotta extends javax.swing.JFrame {
     Animale animale;
     JTextArea statAnim;
     JProgressBar pbNem,pbPers;
+    JLabel statPlayer;
     
     /**
      * Creates new form FormLotta
@@ -130,7 +131,7 @@ public class FormLotta extends javax.swing.JFrame {
         pbPers.setBackground(new Color(170,0,0));
         pbPers.setStringPainted(true);
         pnlVitaPers.add(pbPers);
-        JLabel statPlayer=new JLabel();
+        statPlayer=new JLabel();
         pnlVitaPers.add(statPlayer);
 
         gbcP3.gridy = 0;
@@ -426,6 +427,20 @@ public class FormLotta extends javax.swing.JFrame {
 
         } catch (Exception ex) {
         }
+    }
+    
+   public void refreshDati() {
+        Cacciatore c = gestore.getCacciatore();
+
+        pbPers.setValue(c.getVita());
+        pbPers.setString("VITA " + c.getVita() + "%");
+
+        loadStatAnimale(animale); 
+
+        loadStatPers(c, statPlayer);
+
+        this.revalidate();
+        this.repaint();
     }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -102,9 +102,9 @@ public class gestoreForm {
 
     public Cacciatore sceltaPersonaggio(){
         switch (nCacciatore){
-            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),100,50);
-            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50,0,0)),20,40);
-            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",70,0,0), null),45,40);
+            case 0: return new CacciatoreVeloce(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),100,5);
+            case 1: return new CacciatoreMedico(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), new Cura("Kit di Pronto Soccorso","immagini/prontoSoccorso.png",50,0,0)),20,5);
+            case 2: return new CacciatoreForte(new Inventario(new Arma("Carabina","immagini/carabina.png",70,0,0), null),25,5);
             case 3: return new CacciatoreProtetto(new Inventario(new Arma("Pistola","immagini/pistola.png",20,0,0), null),10,100);
         }
         return null;
@@ -124,6 +124,9 @@ public class gestoreForm {
     public void chiusuraInventario(JFrame formChiama) {
         if (formChiama != null) {
             formChiama.setVisible(true);
+            if(formChiama instanceof FormLotta){
+                formLotta.refreshDati();
+            }
         }
 
         if (formInventario != null) {
