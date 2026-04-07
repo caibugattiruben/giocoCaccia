@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ruben
  */
-public class Oggetto {
+public class Oggetto implements Serializable{
     
     protected String nome;
     private String collegamentoFoto;

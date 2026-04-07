@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -38,6 +39,7 @@ public class AvvioGioco extends javax.swing.JFrame {
         
         this.g=g;
         gioco=this;
+        
         
         Image immagineIngr=new ImageIcon("immagini/ingranaggio.png").getImage();
         
@@ -134,6 +136,14 @@ public class AvvioGioco extends javax.swing.JFrame {
                 int w = gioco.getWidth();
                 int h = gioco.getHeight();
                 g.newGameScelto(w,h);
+            }
+        });
+        loadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int w = gioco.getWidth();
+                int h = gioco.getHeight();
+                g.aproSalvataggio(w,h,gioco,false);
             }
         });
         exit.addActionListener(new ActionListener() {

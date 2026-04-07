@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author caibugatti.ruben
  */
-public class GestoreCaccia {
+public class GestoreCaccia implements Serializable{
     gestoreForm gForm=new gestoreForm(this);
     Cacciatore cacciatore;
     private int turnoAttuale = 0;
@@ -27,7 +29,6 @@ public class GestoreCaccia {
         if (cacciatore != null) {
             gForm.caricaPersonaggio(cacciatore);
         }
-        cacciatore.contenutiInv();
     }
     
     public Arma getArma(){
@@ -158,6 +159,19 @@ public class GestoreCaccia {
         return turnoAttuale >= turnoFine;
     }
     
+    public void salvaDati(String path){
+        FileManager.salvaSalvataggio(path,new Salvataggio(cacciatore,turnoAttuale));
+    }
     
+    public void caricaDati(String path) throws ClassNotFoundException{
+         Salvataggio s=FileManager.loadSalvataggio(path);
+         
+         turnoAttuale=s.getTurno();
+         cacciatore=s.getCacciatore();
+         
+         gForm.caricaPersonaggio(cacciatore);
+        
+
+    }
     
 }

@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ruben
  */
-public class Cura extends Oggetto {
+public class Cura extends Oggetto implements Serializable{
     
     private int valore;
     

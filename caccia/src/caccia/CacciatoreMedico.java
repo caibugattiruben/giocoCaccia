@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author caibugatti.ruben
  */
-public class CacciatoreMedico extends Cacciatore {
+public class CacciatoreMedico extends Cacciatore implements Serializable{
     
     public CacciatoreMedico(Inventario inv,int v,int s){
         super(inv,v,s);

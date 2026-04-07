@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author caibugatti.ruben
  */
-public class Cacciatore {
+public class Cacciatore implements Serializable{
     
     private int vita,danno,velocità,scudo,carne=5,pelle=5,cooldown;
     protected Inventario inventario;
@@ -73,10 +75,6 @@ public class Cacciatore {
     
     public String getCollegamento(Oggetto o){
         return inventario.getCollegamento(o);
-    }
-    
-    public void contenutiInv(){
-        inventario.cosaHo();
     }
     
     public void aggOggetto(Oggetto o){

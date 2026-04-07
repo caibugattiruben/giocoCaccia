@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ruben
  */
-public class Arma extends Oggetto {
+public class Arma extends Oggetto implements Serializable{
     
     private int danno; 
     

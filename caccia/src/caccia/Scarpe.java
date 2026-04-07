@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ruben
  */
-public class Scarpe extends Oggetto {
+public class Scarpe extends Oggetto implements Serializable{
     
     int valocita;
     public Scarpe(String n,String c,int v,int cc,int cp){

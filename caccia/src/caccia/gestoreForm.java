@@ -19,6 +19,7 @@ public class gestoreForm {
     FormInventario formInventario;
     statPlayer formStat;
     FormLotta formLotta;
+    FormSalvataggio formSalvataggio;
     
     private int nCacciatore;
     
@@ -51,10 +52,28 @@ public class gestoreForm {
         formGioco.setVisible(true);
     }
 
-    public void creoGioco(int w, int h, int nCac){
+    public void creoGioco(int w, int h){
+        int nCac;
+        
+        if (gestore.getCacciatore() instanceof CacciatoreForte) {
+            nCac=3;
+        } 
+        else if (gestore.getCacciatore() instanceof CacciatoreMedico) {
+            nCac=2;
+        } 
+        else if (gestore.getCacciatore() instanceof CacciatoreProtetto) {
+            nCac=4;
+        } 
+        else {
+           nCac=1;
+        }
+        
+        
+        
         if (formPersonaggio != null) {
             formPersonaggio.dispose();
         }
+        
         
         formGioco = new FormGioco(this, nCac);
         
@@ -66,11 +85,20 @@ public class gestoreForm {
         formGioco.setVisible(true);
         formGioco.setSize(w, h);
         gestore.caricaPersonaggio();
+        formGioco.aggiornaInterfacciaTurni();
+    }
+    
+    public void aproSalvataggio(int w,int h,JFrame chiApre,boolean salvataggio ){
+        formSalvataggio=new FormSalvataggio(w,h,this,salvataggio);
+        formSalvataggio.setVisible(true);
+        
+        chiApre.setVisible(false);
     }
 
     public void sceltaPersonaggioCliccata(){
         gestore.setPersonaggio(sceltaPersonaggio());
     }
+
 
     public Cacciatore sceltaPersonaggio(){
         switch (nCacciatore){
@@ -100,14 +128,6 @@ public class gestoreForm {
 
         if (formInventario != null) {
             formInventario.dispose();
-        }
-    }
-
-    public void caricoGioco(int w, int h){
-        if (formGioco != null) {
-            formGioco.setSize(w, h);
-            formGioco.setVisible(true);
-            gestore.caricaPersonaggio();
         }
     }
 
@@ -206,5 +226,13 @@ public class gestoreForm {
     
     public boolean controllaVittoria(){
         return gestore.controllaVittoria();
+    }
+    
+    public void caricaDati(String path) throws ClassNotFoundException{
+        gestore.caricaDati(path);
+    }
+    
+    public void salvaDati(String path) throws ClassNotFoundException{
+        gestore.salvaDati(path);
     }
 }

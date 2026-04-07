@@ -5,8 +5,12 @@
 package caccia;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -53,4 +57,25 @@ public class FileManager {
             return new AnimaleAggressivo(animale[0],Integer.parseInt(animale[1]),Integer.parseInt(animale[2]),Integer.parseInt(animale[3]));
         }
     }
+    
+    public static void salvaSalvataggio(String path,Salvataggio s){
+        try(ObjectOutputStream oss=new ObjectOutputStream(new FileOutputStream(path))){
+            oss.writeObject(s);
+        }
+        catch(IOException e){
+            
+        }
+                
+    }
+    
+    public static Salvataggio loadSalvataggio(String path) throws ClassNotFoundException{
+        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(path))){
+           return (Salvataggio) ois.readObject();
+        }
+        catch(IOException e){
+            
+        }
+         return null;       
+    }
+        
 }

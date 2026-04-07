@@ -4,11 +4,13 @@
  */
 package caccia;
 
+import java.io.Serializable;
+
 /**
  *
  * @author caibugatti.ruben
  */
-public class CacciatoreProtetto extends Cacciatore {
+public class CacciatoreProtetto extends Cacciatore implements Serializable{
     private boolean scudoAttivo = false;
     public CacciatoreProtetto(Inventario inv,int v,int s){
         super(inv,v,s);

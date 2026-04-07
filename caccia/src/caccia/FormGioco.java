@@ -351,7 +351,15 @@ public class FormGioco extends javax.swing.JFrame {
         };
         impostazioni.setContentAreaFilled(false);
         impostazioni.setBorderPainted(false);
-        impostazioni.addActionListener(e -> g.aproMercante());
+        impostazioni.addActionListener(e -> {
+            String[] opzioni = {"SALVA", "EXIT"};
+            int scelta = JOptionPane.showOptionDialog(null, "Cosa vuoi fare?", "Impostazioni", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opzioni, opzioni[0]);
+            if (scelta == 0) {
+                g.aproSalvataggio(this.getWidth(),this.getHeight(),this,true);
+            } else if (scelta == 1) {
+                System.exit(0);
+            }
+        });
 
         panelImpostazioni.add(impostazioni);
         for (int i = 0; i < 6; i++) panelImpostazioni.add(new JLabel("")); 

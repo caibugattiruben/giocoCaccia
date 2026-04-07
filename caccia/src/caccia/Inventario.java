@@ -4,6 +4,7 @@
  */
 package caccia;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author ruben
  */
-public class Inventario {
+public class Inventario implements Serializable{
     ArrayList<Oggetto> oggetti;
     
     public Inventario(Arma a,Cura c) {
@@ -45,12 +46,6 @@ public class Inventario {
     
     public String getCollegamento(Oggetto o){
         return o.getCollegamento();
-    }
-    
-    public void cosaHo(){
-        for(Oggetto o:oggetti){
-            System.out.println(o);
-        }
     }
     
     public Arma getArma() {
