@@ -27,4 +27,5 @@ public class CacciatoreMedico extends Cacciatore implements Serializable{
         setCooldown(8);
         return "Hai usato il Medikit Avanzato: Vita al 100%!";
     }
+    
 }

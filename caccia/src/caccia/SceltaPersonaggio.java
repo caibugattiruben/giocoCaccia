@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -42,12 +43,17 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         gioco=this;
         
         ArrayList<JButton> cacciatori = new ArrayList();
+        ArrayList<String> dAbilita = new ArrayList();
+        
+        dAbilita.add("La mia abilità mi fa scappare dal nemico");
+        dAbilita.add("La mia abilità riporta la vita al massimo");
+        dAbilita.add("La mia abilità one shotta l'animale");
+        dAbilita.add("La mia abilità para il prossimo attacco dell'animale");
 
         for (int i = 0; i < 4; i++) {
             Image immagine=new ImageIcon("immagini/g"+(i+1)+".png").getImage();
             
             JButton b=creoBottone(immagine,cacciatori);
-            
             cacciatori.add(b);
         }
 
@@ -79,7 +85,16 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         panelPiccolo.setLayout(new GridLayout(1, 4, 20, 20));
         panelPiccolo.setOpaque(false);
         for (JButton b : cacciatori) {
-            panelPiccolo.add(b);
+            JPanel p=new JPanel();
+            p.setLayout(new BorderLayout());
+            p.add(b,BorderLayout.CENTER );
+            JButton info=new JButton("INFO ABILITA'");
+            info.addActionListener(e -> {
+                JOptionPane.showMessageDialog(null, dAbilita.get(cacciatori.indexOf(b)), "ABILITA'", JOptionPane.INFORMATION_MESSAGE);
+            }); 
+            p.add(info,BorderLayout.SOUTH );
+            p.setOpaque(false);
+            panelPiccolo.add(p);
         }
         gbc.gridx = 0;
         gbc.gridy = 1;

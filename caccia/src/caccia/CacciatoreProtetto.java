@@ -33,4 +33,5 @@ public class CacciatoreProtetto extends Cacciatore implements Serializable{
     public void setScudoAttivo(boolean stato) {
         this.scudoAttivo = stato;
     }
+    
 }

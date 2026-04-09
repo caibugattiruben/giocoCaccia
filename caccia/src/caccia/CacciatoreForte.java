@@ -26,4 +26,5 @@ public class CacciatoreForte extends Cacciatore implements Serializable{
         setCooldown(6);
         return "COLPO CRITICO! Hai abbattuto il " + nemico.getNome() + " in un colpo!";
     }
+    
 }

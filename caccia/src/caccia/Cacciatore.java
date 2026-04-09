@@ -127,4 +127,8 @@ public class Cacciatore implements Serializable{
     public void setCooldown(int cooldown) { 
         this.cooldown = cooldown; 
     }
+    
+    public String desrizioneAbilita(){
+        return "";
+    }
 }
