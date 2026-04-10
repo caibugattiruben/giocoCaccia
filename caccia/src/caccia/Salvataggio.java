@@ -14,9 +14,12 @@ public class Salvataggio implements Serializable{
     
     private Cacciatore c;
     private int turno;
-    public Salvataggio(Cacciatore c,int t){
+    private String log,path;
+    public Salvataggio(Cacciatore c,int t,String[] dati){
         this.c=c;
         this.turno=t;
+        this.log=dati[0];
+        this.path=dati[1];
     }
     
     public Cacciatore getCacciatore(){
@@ -25,5 +28,10 @@ public class Salvataggio implements Serializable{
     
     public int getTurno(){
         return turno;
+    }
+    
+    public String[] getDati(){
+        String[] rit={log,path};
+        return rit;
     }
 }

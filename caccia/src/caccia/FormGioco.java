@@ -44,6 +44,7 @@ public class FormGioco extends javax.swing.JFrame {
     JPanel arma, panelAnimale,panel,mainPanel, panelKm;
     JTextArea textArea;
     JLabel lblTurni;
+    String path;
     
     public FormGioco(gestoreForm gi,int nC) {
         initComponents();
@@ -495,6 +496,7 @@ public class FormGioco extends javax.swing.JFrame {
     
     public void setImmagineEvento(String path) {
         panelAnimale.removeAll(); 
+        this.path=path;
 
         panelAnimale.setLayout(new BorderLayout()); 
 
@@ -602,18 +604,24 @@ public class FormGioco extends javax.swing.JFrame {
     }
     
     private void verificaSconfitta() {
-    Cacciatore c = g.getCacciatore();
+        Cacciatore c = g.getCacciatore();
 
         if (c.getVita() <= 0) {
-            JOptionPane.showMessageDialog(this, 
-                "IL TUO CACCIATORE È MORTO!\nNon hai più vita per continuare la caccia.", 
-                "GAME OVER", 
-                JOptionPane.ERROR_MESSAGE);
-
+            JOptionPane.showMessageDialog(this, "IL TUO CACCIATORE È MORTO!\nNon hai più vita per continuare la caccia.", "GAME OVER", JOptionPane.ERROR_MESSAGE);
 
             System.exit(0); 
         }
-}
+    }
+    
+    public String[] getDatiSalv(){
+        String[] rit={textArea.getText(),path};
+        return rit;
+    }
+    
+    public void loadDatiSalv(String[] dati){
+        textArea.setText(dati[0]);
+        setImmagineEvento(dati[1]);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

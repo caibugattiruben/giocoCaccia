@@ -66,7 +66,7 @@ public class Cacciatore implements Serializable{
         setDanno();
     }
     
-    public void setVelocita(int v){
+    public void setVelocità(int v){
         this.velocità+=v;
         
         if(velocità<0){
@@ -86,6 +86,32 @@ public class Cacciatore implements Serializable{
     
     public void aggOggetto(Oggetto o){
         inventario.aggiungiOggetto(o);
+    }
+    
+
+    public Oggetto creaOggettoDaNome(String nome) {
+        switch (nome) {
+            // --- ARMI ---
+            case "Carabina": 
+                return new Arma("Carabina", "immagini/carabina.png", 70, 10, 10);
+            case "Doppietta": 
+                return new Arma("Doppietta", "immagini/doppietta.png", 50, 5, 7);
+            case "Automatico": 
+                return new Arma("Automatico", "immagini/automatico.png", 30, 4, 2);
+            case "Pistola": 
+                return new Arma("Pistola", "immagini/pistola.png", 20, 2, 2);
+
+            // --- CURE ---
+            case "Ampolla magica": 
+                return new Cura("Ampolla magica", "immagini/ampollaMagica.png", 100, 10, 10);
+            case "Kit di pronto soccorso": 
+                return new Cura("Kit di Pronto Soccorso", "immagini/prontoSoccorso.png", 50, 6, 5);
+            case "Benda": 
+                return new Cura("Benda", "immagini/benda.png", 15, 3, 2);
+
+            default:
+                return null;
+        }
     }
     
     public Inventario getInventario(){

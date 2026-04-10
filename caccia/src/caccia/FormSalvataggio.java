@@ -6,7 +6,7 @@ package caccia;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.io.File;
 
 /**
  *
@@ -18,13 +18,14 @@ public class FormSalvataggio extends javax.swing.JFrame {
 
     gestoreForm g;
     JPanel panel;
-    boolean salvataggio;
+    boolean salvataggio,usaCSV;
     /**
      * Creates new form FormSalvataggio
      */
     public FormSalvataggio(int w,int h,gestoreForm g,boolean salvataggio) {
         initComponents();
         
+        chiedoSalv();
         this.setSize(w,h);
         this.g=g;
         this.salvataggio=salvataggio;
@@ -53,13 +54,13 @@ public class FormSalvataggio extends javax.swing.JFrame {
         gbc.insets = new Insets(10, 50, 10, 50);
 
         gbc.gridy = 1;
-        panel.add(creaRigaSalvataggio(1, "save1.ser"), gbc);
+        panel.add(creaRigaSalvataggio(1, "save1"), gbc);
 
         gbc.gridy = 2;
-        panel.add(creaRigaSalvataggio(2, "save2.ser"), gbc);
+        panel.add(creaRigaSalvataggio(2, "save2"), gbc);
 
         gbc.gridy = 3;
-        panel.add(creaRigaSalvataggio(3, "save3.ser"), gbc);
+        panel.add(creaRigaSalvataggio(3, "save3"), gbc);
 
         this.setLayout(new BorderLayout());
         this.add(panel);
@@ -89,29 +90,57 @@ public class FormSalvataggio extends javax.swing.JFrame {
         JButton btnLoad = new JButton("LOAD");
 
         btnLoad.addActionListener(e -> {
-            if(salvataggio==true){
-                try {
-                    g.salvaDati(nomeFile);
-                    g.aproGioco(this.getWidth(), this.getHeight());
+            String est;
+            if (usaCSV) {
+                est = ".csv";
+            } else {
+                est = ".ser";
+            }
 
-                } catch (ClassNotFoundException ex) {
-                }
-            }
-            else{
+            String nomeFileCompleto = nomeFile + est;
+            File f = new File(nomeFileCompleto);
+
+            if (salvataggio) {
                 try {
-                    g.caricaDati(nomeFile);
-                    g.creoGioco(this.getWidth(), this.getHeight());
+                    g.azioneSlotSalv(id, true, usaCSV,getWidth(),getHeight());
                 } catch (ClassNotFoundException ex) {
                 }
+                this.dispose();
+            } 
+            else {
+                if (f.exists() && f.length() > 0) {
+                    try {
+                        g.azioneSlotSalv(id, false, usaCSV,getWidth(),getHeight());
+                    } catch (ClassNotFoundException ex) {
+                        
+                    }
+                    this.dispose();
+                } 
+                else {
+                    JOptionPane.showMessageDialog(this, "QUESTO SALVATAGGIO E' VUOTO (" + est + ")", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            
-            this.dispose();
         });
 
         riga.add(lblInfo, BorderLayout.CENTER);
         riga.add(btnLoad, BorderLayout.EAST);
 
         return riga;
+    }
+    
+    public void chiedoSalv(){
+       String[] opzioni = { "File Binario (.ser)", "File Excel (.csv)" };
+        int scelta = JOptionPane.showOptionDialog(this, 
+                "Che tipo di file vuoi gestire?", 
+                "Selezione Formato", 
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+                null, opzioni, opzioni[0]);
+
+        if (scelta == 1) {
+            this.usaCSV = true;
+        } else {
+            this.usaCSV = false;
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

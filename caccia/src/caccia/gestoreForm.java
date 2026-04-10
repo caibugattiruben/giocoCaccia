@@ -4,6 +4,7 @@
  */
 package caccia;
 
+import java.io.File;
 import javax.swing.JFrame;
 
 /**
@@ -22,6 +23,7 @@ public class gestoreForm {
     FormSalvataggio formSalvataggio;
     
     private int nCacciatore;
+    private String[] dati;
     
     public gestoreForm(GestoreCaccia g){
         this.gestore = g;
@@ -52,7 +54,7 @@ public class gestoreForm {
         formGioco.setVisible(true);
     }
 
-    public void creoGioco(int w, int h){
+    public void creoGioco(int w, int h,boolean load){
         int nCac;
         
         if (gestore.getCacciatore() instanceof CacciatoreForte) {
@@ -76,7 +78,9 @@ public class gestoreForm {
         
         
         formGioco = new FormGioco(this, nCac);
-        
+        if(load==true){
+            loadDati(this.dati);
+        }
         aproGioco(w,h);
         
     }
@@ -237,5 +241,55 @@ public class gestoreForm {
     
     public void salvaDati(String path) throws ClassNotFoundException{
         gestore.salvaDati(path);
+    }
+    
+    public String[] getDati(){
+        return formGioco.getDatiSalv();
+    }
+    
+    public void loadDati(String[] dati){
+        formGioco.loadDatiSalv(dati);
+    }
+    
+    public void setDati(String[] d){
+        this.dati=d;
+    }
+    
+    public void azioneSlotSalv(int nrSlot, boolean salvataggio, boolean usaCSV,int w,int h) throws ClassNotFoundException {
+        String estensione;
+
+        if (usaCSV==true) {
+            estensione = ".csv";
+        } else {
+            estensione = ".ser";
+        }
+
+        String nomeFile = "save" + nrSlot + estensione;
+
+        if (salvataggio==true) {
+            if (usaCSV==true) {
+                gestore.salvaCSV(nomeFile);
+            } else {
+                gestore.salvaDati(nomeFile);
+            }
+            formSalvataggio.dispose();
+            formGioco.setVisible(true);
+        } 
+        else {
+            File f = new File(nomeFile);
+
+            if (f.length()> 0) {
+                
+                if (usaCSV==true) {
+                    this.dati=gestore.caricaCSV(nomeFile);
+                } else {
+                    gestore.caricaDati(nomeFile);
+                }
+                this.creoGioco(w, h, true); 
+                
+            } 
+            else {
+            }
+        }
     }
 }
