@@ -13,6 +13,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -33,6 +35,7 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
     SceltaPersonaggio gioco;
     int numCacciatore;
     JButton scegli ;
+    JButton cacciatoreSelezionato;
 
     public SceltaPersonaggio(gestoreForm g,int w,int h) {
         initComponents();
@@ -149,6 +152,11 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         b.addActionListener(e -> {
                 numCacciatore=cacciatori.indexOf(b);
                 scegli.setEnabled(true);
+                if (cacciatoreSelezionato != null && cacciatoreSelezionato != b) {
+                    rimuoviBordo(cacciatoreSelezionato);
+                }
+                cacciatoreSelezionato = b;
+                applicaBordoSelezione(b);
         }); 
         
         b.setBorderPainted(false);
@@ -156,17 +164,37 @@ public class SceltaPersonaggio extends javax.swing.JFrame {
         b.setFocusPainted(false);
         b.setOpaque(false);
         
-        aggiungiListener(b,cacciatori);
+        b.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (b != cacciatoreSelezionato) {
+                    applicaBordoHover(b);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (b != cacciatoreSelezionato) {
+                    rimuoviBordo(b);
+                }
+            }
+        });
         return b;
     }
-    public void aggiungiListener(JButton b,ArrayList<JButton> cacciatori){
-        b.addActionListener(e -> {
-                for (JButton btn : cacciatori) {
-                    btn.setBorder(null);
-                }
-                b.setBorderPainted(true);
-                b.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4));
-        });  
+
+    private void applicaBordoHover(JButton b) {
+        b.setBorderPainted(true);
+        b.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+    }
+
+    private void applicaBordoSelezione(JButton b) {
+        b.setBorderPainted(true);
+        b.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4));
+    }
+
+    private void rimuoviBordo(JButton b) {
+        b.setBorder(null);
+        b.setBorderPainted(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.

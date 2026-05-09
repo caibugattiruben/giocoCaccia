@@ -93,7 +93,13 @@ public class gestoreForm {
     }
     
     public void aproSalvataggio(int w,int h,JFrame chiApre,boolean salvataggio ){
-        formSalvataggio=new FormSalvataggio(w,h,this,salvataggio);
+        if(chiApre instanceof AvvioGioco){
+            formSalvataggio=new FormSalvataggio(w,h,this,salvataggio,"LOAD");
+        }
+        else{
+            formSalvataggio=new FormSalvataggio(w,h,this,salvataggio,"SAVE");
+        }
+        
         formSalvataggio.setVisible(true);
         
         chiApre.setVisible(false);

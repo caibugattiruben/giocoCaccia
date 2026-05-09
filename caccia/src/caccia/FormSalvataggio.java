@@ -19,13 +19,15 @@ public class FormSalvataggio extends javax.swing.JFrame {
     gestoreForm g;
     JPanel panel;
     boolean salvataggio,usaCSV;
+    String caricaSalav;
     /**
      * Creates new form FormSalvataggio
      */
-    public FormSalvataggio(int w,int h,gestoreForm g,boolean salvataggio) {
+    public FormSalvataggio(int w,int h,gestoreForm g,boolean salvataggio,String caricaSalva) {
         initComponents();
         
         chiedoSalv();
+        caricaSalav=caricaSalva;
         this.setSize(w,h);
         this.g=g;
         this.salvataggio=salvataggio;
@@ -87,7 +89,7 @@ public class FormSalvataggio extends javax.swing.JFrame {
         lblInfo.setForeground(Color.WHITE);
         lblInfo.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JButton btnLoad = new JButton("LOAD");
+        JButton btnLoad = new JButton(caricaSalav);
 
         btnLoad.addActionListener(e -> {
             String est;
